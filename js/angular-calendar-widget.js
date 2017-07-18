@@ -4,13 +4,13 @@ angular.module('angularFlatCalendar', []).directive('calendarWidgetDirective', f
         template: '<div id=\'angular-flat-calendar\'>'+
           '<div id=\'calendar-header\' style=\'display: flex\'>'+
             '<div id=\'calendar-header-previous-month\' ng-click="acw_shiftMonth(-1)">'+
-              '<a>&lt;</a>'+
+              '<span><</span>'+
             '</div>'+
             '<div id=\'calendar-header-month-year-container\'>'+
               '{{acw_currentMonthName}} | {{acw_currentYear}}'+
             '</div>'+
             '<div id=\'calendar-header-next-month\' ng-click="acw_shiftMonth(1)">'+
-              '<a>></a>'+
+              '<span>></span>'+
             '</div>'+
           '</div>'+
           '<div id=\'calendar-days\'>'+
@@ -26,7 +26,7 @@ angular.module('angularFlatCalendar', []).directive('calendarWidgetDirective', f
                     'class="calendar-day"'+
                     'ng-class="{\'calendar-day-today\': acw_isToday(day.day, day.month, day.year), \'disabled\': day.month != acw_currentMonth+1, \'selected\': acw_formatDate(day) == acw_formatDate(acw_selectedDate), \'has-events\': acw_dateHasEvents(acw_createNewDate(day.day, day.month, day.year))}"'+
                     'ng-click="acw_setSelectedDate(day.day, day.month, day.year)">'+
-                  '<a>{{day.day}}</a>'+
+                  '<span>{{day.day}}</span>'+
                 '</td>'+
               '</tr>'+
             '</table>'+
