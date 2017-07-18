@@ -1,36 +1,36 @@
 angular.module('angularFlatCalendar', []).directive('calendarWidgetDirective', function () {
     return {
         restrict: 'E',
-        template: '<div id=\'angular-flat-calendar\'>'
-          '<div id=\'calendar-header\' style=\'display: flex\'>'
-            '<div id=\'calendar-header-previous-month\' ng-click="acw_shiftMonth(-1)">'
-              '<a>&lt;</a>'
-            '</div>'
-            '<div id=\'calendar-header-month-year-container\'>'
-              '{{acw_currentMonthName}} | {{acw_currentYear}}'
-            '</div>'
-            '<div id=\'calendar-header-next-month\' ng-click="acw_shiftMonth(1)">'
-              '<a>></a>'
-            '</div>'
-          '</div>'
-          '<div id=\'calendar-days\'>'
-            '<table>'
-              '<tr id=\'calendar-days-weekdays-name\'>'
-                '<td ng-repeat="weekday in acw_weekdays_short track by $index">'
-                  '{{weekday}}'
-                '</td>'
-              '</tr>'
-              '<tr class="calendar-days-week" ng-repeat="week in acw_weeks track by $index" ng-attr-id="calendar-days-week-{{$index+1}}">'
-                '<td ng-repeat="day in week"'
-                    'ng-attr-id="calendar-day-date-{{day.day}}-{{day.month}}-{{day.year}}"'
-                    'class="calendar-day"'
-                    'ng-class="{\'calendar-day-today\': acw_isToday(day.day, day.month, day.year), \'disabled\': day.month != acw_currentMonth+1, \'selected\': acw_formatDate(day) == acw_formatDate(acw_selectedDate), \'has-events\': acw_dateHasEvents(acw_createNewDate(day.day, day.month, day.year))}"'
-                    'ng-click="acw_setSelectedDate(day.day, day.month, day.year)">'
-                  '<a>{{day.day}}</a>'
-                '</td>'
-              '</tr>'
-            '</table>'
-          '</div>'
+        template: '<div id=\'angular-flat-calendar\'>'+
+          '<div id=\'calendar-header\' style=\'display: flex\'>'+
+            '<div id=\'calendar-header-previous-month\' ng-click="acw_shiftMonth(-1)">'+
+              '<a>&lt;</a>'+
+            '</div>'+
+            '<div id=\'calendar-header-month-year-container\'>'+
+              '{{acw_currentMonthName}} | {{acw_currentYear}}'+
+            '</div>'+
+            '<div id=\'calendar-header-next-month\' ng-click="acw_shiftMonth(1)">'+
+              '<a>></a>'+
+            '</div>'+
+          '</div>'+
+          '<div id=\'calendar-days\'>'+
+            '<table>'+
+              '<tr id=\'calendar-days-weekdays-name\'>'+
+                '<td ng-repeat="weekday in acw_weekdays_short track by $index">'+
+                  '{{weekday}}'+
+                '</td>'+
+              '</tr>'+
+              '<tr class="calendar-days-week" ng-repeat="week in acw_weeks track by $index" ng-attr-id="calendar-days-week-{{$index+1}}">'+
+                '<td ng-repeat="day in week"'+
+                    'ng-attr-id="calendar-day-date-{{day.day}}-{{day.month}}-{{day.year}}"'+
+                    'class="calendar-day"'+
+                    'ng-class="{\'calendar-day-today\': acw_isToday(day.day, day.month, day.year), \'disabled\': day.month != acw_currentMonth+1, \'selected\': acw_formatDate(day) == acw_formatDate(acw_selectedDate), \'has-events\': acw_dateHasEvents(acw_createNewDate(day.day, day.month, day.year))}"'+
+                    'ng-click="acw_setSelectedDate(day.day, day.month, day.year)">'+
+                  '<a>{{day.day}}</a>'+
+                '</td>'+
+              '</tr>'+
+            '</table>'+
+          '</div>'+
         '</div>',
         controller: function($scope) {
           $scope.acw_weekdays_names = $scope.acw_weekdays_names ? $scope.acw_weekdays_names : ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
