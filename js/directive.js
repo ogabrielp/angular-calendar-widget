@@ -1,11 +1,11 @@
-angular.module('calendarWidget').directive('calendarWidgetDirective', function () {
+angular.module('angularFlatCalendar', []).directive('calendarWidgetDirective', function () {
     return {
         restrict: 'E',
         templateUrl: 'template.htm',
         controller: function($scope) {
-          $scope.weekdays_names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-          $scope.weekdays_short = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-          $scope.month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+          $scope.weekdays_names = $scope.weekdays_names ? $scope.weekdays_names : ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+          $scope.weekdays_short = $scope.weekdays_short ? $scope.weekdays_short : ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+          $scope.month_names = $scope.month_names ? $scope.month_names : ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
           var today = new Date();
           var currentMonth = today.getMonth();

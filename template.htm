@@ -13,7 +13,7 @@
   <div id='calendar-days'>
     <table>
       <tr id='calendar-days-weekdays-name'>
-        <td ng-repeat="weekday in weekdays_short">
+        <td ng-repeat="weekday in weekdays_short track by $index">
           {{weekday}}
         </td>
       </tr>
