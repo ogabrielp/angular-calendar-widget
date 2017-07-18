@@ -1,0 +1,9 @@
+div#calendar {
+  display: inline-block;
+  width: 300px;
+}
+
+div#calendar-header-month-year-container {
+  width: 90%;
+  text-align: center;
+}
