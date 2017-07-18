@@ -13,6 +13,7 @@
     "widget",
     "component"
   ],
+  "main": "js/angular-calendar-widget",
   "analyze": true,
   "license": "MIT"
 }
