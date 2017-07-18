@@ -1,9 +1,30 @@
-div#calendar {
+div#angular-flat-calendar {
   display: inline-block;
   width: 300px;
+  font-family: 'Quicksand', sans-serif;
 }
 
-div#calendar-header-month-year-container {
+div#angular-flat-calendar div#calendar-header-month-year-container {
   width: 90%;
   text-align: center;
+}
+
+div#angular-flat-calendar .disabled {
+  color: lightgray;
+}
+
+div#angular-flat-calendar .calendar-day-today {
+  color: blue;
+}
+
+div#angular-flat-calendar td {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+}
+
+div#angular-flat-calendar tr#calendar-days-weekdays-name {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
 }

@@ -29,6 +29,7 @@ myApp.controller('MainController', function($scope){
   $scope.currentMonthName = currentMonthName;
   $scope.currentYear = currentYear;
   $scope.currentMonthName = currentMonthName;
+  $scope.today = today;
 
   // Functions
 
@@ -87,7 +88,11 @@ myApp.controller('MainController', function($scope){
     console.log(firstWeekday);
     console.log(monthLength);
     for (var i = firstWeekday; day <= monthLength; i++) {
-      visibleDays[i] = day;
+      visibleDays[i] = {
+        'day': day,
+        'month': $scope.currentMonth+1,
+        'year': currentYear
+      };
       day++;
     }
 
@@ -97,14 +102,25 @@ myApp.controller('MainController', function($scope){
     var previousMonthLength = daysInMonth(previousMonth, previousYear);
 
     for (i = firstWeekday-1; i >= 0; i--) {
-      visibleDays[i] = previousMonthLength;
+      visibleDays[i] = {
+        'day': previousMonthLength,
+        'month': previousMonth+1,
+        'year': previousYear
+      };
       previousMonthLength -= 1;
     }
 
+    var nextMonthYear = changeMonth($scope.currentMonth, $scope.currentYear, 1);
+    var nextMonth = nextMonthYear['month'];
+    var nextYear = nextMonthYear['year'];
     day = 1;
 
     for (i = firstWeekday+monthLength; i < 42; i++) {
-      visibleDays[i] = day;
+      visibleDays[i] = {
+        'day': day,
+        'month': nextMonth+1,
+        'year': nextYear
+      };
       day++;
     }
 
@@ -117,6 +133,11 @@ myApp.controller('MainController', function($scope){
     $scope.currentYear = monthYear['year'];
     $scope.currentMonthName = $scope.month_names[$scope.currentMonth];
     $scope.weeks = $scope.populateVisibleDays();
+  }
+
+  $scope.isToday = function(day, month, year) {
+    var today = new Date();
+    return day == today.getDate() && month == today.getMonth()+1 && year == today.getFullYear();
   }
 
   $scope.weeks = $scope.populateVisibleDays();

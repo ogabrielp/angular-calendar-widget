@@ -3,11 +3,12 @@
     <meta charset="utf-8">
     <title>Angular Calendar Widget</title>
     <link href="css/style.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js"></script>
     <script src="js/app.js"></script>
   </head>
   <body ng-app='calendarWidget' ng-controller='MainController'>
-    <div id='calendar'>
+    <div id='angular-flat-calendar'>
       <div id='calendar-header' style='display: flex'>
         <div id='calendar-header-previous-month'>
           <a ng-click="shiftMonth(-1)"><</a>
@@ -21,9 +22,17 @@
       </div>
       <div id='calendar-days'>
         <table>
-          <tr ng-repeat="week in weeks">
-            <td ng-repeat="day in week">
-              {{day}}
+          <tr id='calendar-days-weekdays-name'>
+            <td ng-repeat="weekday in weekdays_short">
+              {{weekday}}
+            </td>
+          </tr>
+          <tr ng-repeat="week in weeks track by $index" ng-attr-id="calendar-days-week-{{$index+1}}">
+            <td ng-repeat="day in week"
+                ng-attr-id="calendar-day-date-{{day.day}}-{{day.month}}-{{day.year}}"
+                class="calendar-day"
+                ng-class="{'calendar-day-today': isToday(day.day, day.month, day.year), 'disabled': day.month != currentMonth+1}">
+              {{day.day}}
             </td>
           </tr>
         </table>
