@@ -4,8 +4,29 @@ div#angular-flat-calendar {
   font-family: 'Quicksand', sans-serif;
 }
 
+div#angular-flat-calendar div#calendar-header {
+  background: #202C39;
+  color: white;
+  height: 40px;
+  cursor: pointer;
+  line-height: 40px;
+}
+
 div#angular-flat-calendar div#calendar-header-month-year-container {
-  width: 90%;
+  width: 80%;
+  text-align: center;
+  cursor: pointer;
+}
+
+div#angular-flat-calendar div#calendar-header-month-year-container:hover,
+div#angular-flat-calendar div#calendar-header-previous-month:hover,
+div#angular-flat-calendar div#calendar-header-next-month:hover {
+  background: #343F4B;
+}
+
+div#angular-flat-calendar div#calendar-header-previous-month,
+div#angular-flat-calendar div#calendar-header-next-month {
+  width: 10%;
   text-align: center;
 }
 
@@ -14,7 +35,9 @@ div#angular-flat-calendar .disabled {
 }
 
 div#angular-flat-calendar .calendar-day-today {
-  color: blue;
+  color: #9E2B25;
+  //border: 1px solid blue;
+  font-weight: bold;
 }
 
 div#angular-flat-calendar td {
@@ -23,8 +46,45 @@ div#angular-flat-calendar td {
   text-align: center;
 }
 
+div#angular-flat-calendar div#calendar-days table {
+  border-spacing: 0;
+  width: 100%;
+}
+
 div#angular-flat-calendar tr#calendar-days-weekdays-name {
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
+  background: #283845;
+  color: white;
+}
+
+div#angular-flat-calendar tr.calendar-days-week:nth-child(even) {
+  background: #F0F5FA;
+}
+
+div#angular-flat-calendar tr.calendar-days-week:nth-child(odd) {
+  background: #FFF;
+}
+
+div#angular-flat-calendar tr.calendar-days-week td.calendar-day {
+  //border-radius: 50px;
+  cursor: pointer;
+}
+
+div#angular-flat-calendar tr.calendar-days-week td.calendar-day:hover {
+  background-color: rgba(0, 0, 255, 0.1);
+}
+
+div#angular-flat-calendar tr.calendar-days-week td.calendar-day.selected {
+  background-color: #9E2B25;
+  color: white;
+}
+
+div#angular-flat-calendar tr.calendar-days-week td.calendar-day a {
+  line-height: 100%;
+}
+
+div#angular-flat-calendar tr.calendar-days-week td.calendar-day a.has-events {
+  border-bottom: 2px solid red;
 }

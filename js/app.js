@@ -25,12 +25,13 @@ myApp.controller('MainController', function($scope){
   else
     amountOfDaysPreviousMonth = daysInMonth(currentMonth-1, currentYear);
 
+  $scope.selectedDate = today;
   $scope.currentMonth = currentMonth;
   $scope.currentMonthName = currentMonthName;
   $scope.currentYear = currentYear;
   $scope.currentMonthName = currentMonthName;
   $scope.today = today;
-
+  $scope.events = {};
   // Functions
 
   function daysInMonth(month, year) {
@@ -90,7 +91,7 @@ myApp.controller('MainController', function($scope){
     for (var i = firstWeekday; day <= monthLength; i++) {
       visibleDays[i] = {
         'day': day,
-        'month': $scope.currentMonth+1,
+        'month': parseInt($scope.currentMonth)+1,
         'year': currentYear
       };
       day++;
@@ -104,7 +105,7 @@ myApp.controller('MainController', function($scope){
     for (i = firstWeekday-1; i >= 0; i--) {
       visibleDays[i] = {
         'day': previousMonthLength,
-        'month': previousMonth+1,
+        'month': parseInt(previousMonth+1),
         'year': previousYear
       };
       previousMonthLength -= 1;
@@ -118,7 +119,7 @@ myApp.controller('MainController', function($scope){
     for (i = firstWeekday+monthLength; i < 42; i++) {
       visibleDays[i] = {
         'day': day,
-        'month': nextMonth+1,
+        'month': parseInt(nextMonth+1),
         'year': nextYear
       };
       day++;
@@ -138,6 +139,29 @@ myApp.controller('MainController', function($scope){
   $scope.isToday = function(day, month, year) {
     var today = new Date();
     return day == today.getDate() && month == today.getMonth()+1 && year == today.getFullYear();
+  }
+
+  $scope.setSelectedDate = function(day, month, year) {
+    $scope.selectedDate = new Date(year, month-1, day);
+    console.log('month:' + (month-1));
+    console.log('$scope.currentMonth:'+$scope.currentMonth);
+    if (month-1 != $scope.currentMonth) {
+      $scope.currentMonth = month-1;
+      $scope.currentMonthName = $scope.month_names[$scope.currentMonth];
+      $scope.weeks = $scope.populateVisibleDays();
+    }
+  }
+
+  $scope.formatDate = function(date) {
+    if (typeof(date.getDate) != 'undefined') {
+      return date.getDate() + '/' + (parseInt(date.getMonth())+1) + '/' + date.getFullYear();
+    } else if (date['day'] && date['month'] && date['year']) {
+      return date['day'] + '/' + date['month'] + '/' + date['year'];
+    }
+  }
+
+  $scope.addEvent = function(obj) {
+    console.log();
   }
 
   $scope.weeks = $scope.populateVisibleDays();
