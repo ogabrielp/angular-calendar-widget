@@ -1,0 +1,18 @@
+{
+  "name": "Angular Calendar Widget",
+  "version": "0.0.1",
+  "description": "A parameterizable component for AngularJS 1.x",
+  "author": "Gabriel Pinheiro <gabrielpcosta@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ogabrielp/angular-calendar-widget"
+  },
+  "keywords": [
+    "angular",
+    "calendar",
+    "widget",
+    "component"
+  ],
+  "analyze": true,
+  "license": "MIT"
+}
