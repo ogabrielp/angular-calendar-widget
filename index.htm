@@ -31,14 +31,12 @@
             <td ng-repeat="day in week"
                 ng-attr-id="calendar-day-date-{{day.day}}-{{day.month}}-{{day.year}}"
                 class="calendar-day"
-                ng-class="{'calendar-day-today': isToday(day.day, day.month, day.year), 'disabled': day.month != currentMonth+1, 'selected': formatDate(day) == formatDate(selectedDate), 'has-events': dayHasEvents(day.day, day.month, day.year)}"
+                ng-class="{'calendar-day-today': isToday(day.day, day.month, day.year), 'disabled': day.month != currentMonth+1, 'selected': formatDate(day) == formatDate(selectedDate), 'has-events': dateHasEvents(createNewDate(day.day, day.month, day.year))}"
                 ng-click="setSelectedDate(day.day, day.month, day.year)">
               <a>{{day.day}}</a>
             </td>
           </tr>
         </table>
       </div>
-    </div><br><br><br><br>
-    <p>Selected date: {{selectedDate}}</p>
   </body>
 </html>

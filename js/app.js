@@ -32,6 +32,9 @@ myApp.controller('MainController', function($scope){
   $scope.currentMonthName = currentMonthName;
   $scope.today = today;
   $scope.events = {};
+  $scope.eventTitle = '';
+  $scope.eventDate = '';
+
   // Functions
 
   function daysInMonth(month, year) {
@@ -86,13 +89,11 @@ myApp.controller('MainController', function($scope){
     var firstWeekday = getFirstWeekday($scope.currentMonth, $scope.currentYear);
     var monthLength = daysInMonth($scope.currentMonth, $scope.currentYear);
 
-    console.log(firstWeekday);
-    console.log(monthLength);
     for (var i = firstWeekday; day <= monthLength; i++) {
       visibleDays[i] = {
         'day': day,
         'month': parseInt($scope.currentMonth)+1,
-        'year': currentYear
+        'year': $scope.currentYear
       };
       day++;
     }
@@ -125,6 +126,7 @@ myApp.controller('MainController', function($scope){
       day++;
     }
 
+    console.log(breakIntoWeeks(visibleDays, 6));
     return breakIntoWeeks(visibleDays, 6);
   }
 
@@ -143,8 +145,6 @@ myApp.controller('MainController', function($scope){
 
   $scope.setSelectedDate = function(day, month, year) {
     $scope.selectedDate = new Date(year, month-1, day);
-    console.log('month:' + (month-1));
-    console.log('$scope.currentMonth:'+$scope.currentMonth);
     if (month-1 != $scope.currentMonth) {
       $scope.currentMonth = month-1;
       $scope.currentMonthName = $scope.month_names[$scope.currentMonth];
@@ -160,10 +160,59 @@ myApp.controller('MainController', function($scope){
     }
   }
 
-  $scope.addEvent = function(obj) {
-    console.log();
+  $scope.addEvent = function(title, date) {
+    if (!$scope.events[date.getFullYear()]) {
+      $scope.events[date.getFullYear()] = {};
+    }
+
+    if (!$scope.events[date.getFullYear()][date.getMonth()+1]) {
+      $scope.events[date.getFullYear()][date.getMonth()+1] = {};
+    }
+
+    if (!$scope.events[date.getFullYear()][date.getMonth()+1][date.getDate()]) {
+      $scope.events[date.getFullYear()][date.getMonth()+1][date.getDate()] = [];
+    }
+
+    $scope.events[date.getFullYear()][date.getMonth()+1][date.getDate()].push({
+      'title': title,
+    });
+
+    console.info('Pushed event \''+title+'\' to $scope.events');
+    console.log($scope.events);
+    $scope.eventTitle = '';
+  }
+
+  $scope.dateHasEvents = function(date) {
+    if(typeof(date.getDate) != 'undefined') {
+      return $scope.events[date.getFullYear()] != undefined &&
+      $scope.events[date.getFullYear()][date.getMonth()+1] != undefined &&
+      $scope.events[date.getFullYear()][date.getMonth()+1][date.getDate()] != undefined &&
+      $scope.events[date.getFullYear()][date.getMonth()+1][date.getDate()].length > 0;
+    } else if (date['day'] && date['month'] && date['year']) {
+      $scope.events[date['year']] != undefined &&
+      $scope.events[date['year']][date['month']] != undefined &&
+      $scope.events[date['year']][date['month']][date['day']] != undefined &&
+      $scope.events[date['year']][date['month']][date['day']].length > 0;
+    } else {
+      console.error('Malformed object.');
+      return false;
+    }
+  }
+
+  $scope.getEvents = function(date) {
+    if ($scope.dateHasEvents(date)) {
+      if(typeof(date.getDate) != undefined)
+        return $scope.events[date.getFullYear()][date.getMonth()+1][date.getDate()];
+      else if (date['day'] && date['month'] && date['year'])
+        return $scope.events[date['year']][date['month']][date['day']];
+      else
+        return [];
+    }
+  }
+
+  $scope.createNewDate = function(day, month, year) {
+    return new Date(year, month-1, day);
   }
 
   $scope.weeks = $scope.populateVisibleDays();
-  console.log($scope.weeks);
 });

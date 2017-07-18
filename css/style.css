@@ -85,6 +85,6 @@ div#angular-flat-calendar tr.calendar-days-week td.calendar-day a {
   line-height: 100%;
 }
 
-div#angular-flat-calendar tr.calendar-days-week td.calendar-day a.has-events {
+div#angular-flat-calendar tr.calendar-days-week td.calendar-day.has-events a {
   border-bottom: 2px solid red;
 }
