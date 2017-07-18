@@ -32,8 +32,6 @@ myApp.controller('MainController', function($scope){
   $scope.currentMonthName = currentMonthName;
   $scope.today = today;
   $scope.events = {};
-  $scope.eventTitle = '';
-  $scope.eventDate = '';
 
   // Functions
 

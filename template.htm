@@ -1,0 +1,31 @@
+<div id='angular-flat-calendar'>
+  <div id='calendar-header' style='display: flex'>
+    <div id='calendar-header-previous-month' ng-click="shiftMonth(-1)">
+      <a>&lt;</a>
+    </div>
+    <div id='calendar-header-month-year-container'>
+      {{currentMonthName}} | {{currentYear}}
+    </div>
+    <div id='calendar-header-next-month' ng-click="shiftMonth(1)">
+      <a>></a>
+    </div>
+  </div>
+  <div id='calendar-days'>
+    <table>
+      <tr id='calendar-days-weekdays-name'>
+        <td ng-repeat="weekday in weekdays_short">
+          {{weekday}}
+        </td>
+      </tr>
+      <tr class="calendar-days-week" ng-repeat="week in weeks track by $index" ng-attr-id="calendar-days-week-{{$index+1}}">
+        <td ng-repeat="day in week"
+            ng-attr-id="calendar-day-date-{{day.day}}-{{day.month}}-{{day.year}}"
+            class="calendar-day"
+            ng-class="{'calendar-day-today': isToday(day.day, day.month, day.year), 'disabled': day.month != currentMonth+1, 'selected': formatDate(day) == formatDate(selectedDate), 'has-events': dateHasEvents(createNewDate(day.day, day.month, day.year))}"
+            ng-click="setSelectedDate(day.day, day.month, day.year)">
+          <a>{{day.day}}</a>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
