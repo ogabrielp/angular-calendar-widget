@@ -1,6 +1,6 @@
 {
   "name": "angular-calendar-widget",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A parameterizable component for AngularJS 1.x",
   "author": "Gabriel Pinheiro <gabrielpcosta@gmail.com>",
   "repository": {
