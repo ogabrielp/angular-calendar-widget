@@ -47,7 +47,6 @@ angular.module('angularFlatCalendar', []).directive('calendarWidgetDirective', f
           $scope['acw'].weekdays_names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
           $scope['acw'].weekdays_short = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
           $scope['acw'].month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-          console.log($scope['acw']);
 
           var today = new Date();
           var currentMonth = today.getMonth();
@@ -186,7 +185,6 @@ angular.module('angularFlatCalendar', []).directive('calendarWidgetDirective', f
 
           $scope['acw'].setSelectedDate = function(day, month, year) {
             $scope['acw'].selectedDate = new Date(year, month-1, day);
-            console.log('setting selected date to '+$scope['acw'].selectedDate);
             if (month-1 != $scope['acw'].currentMonth) {
               $scope['acw'].currentMonth = month-1;
               $scope['acw'].currentMonthName = $scope['acw'].month_names[$scope['acw'].currentMonth];
