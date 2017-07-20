@@ -34,9 +34,9 @@ angular.module('angularFlatCalendar', []).directive('calendarWidgetDirective', f
         '</div>',
         controller: function($scope) {
           $scope['acw'] = {};
-          $scope['acw'].weekdays_names = $scope['acw'].weekdays_names ? $scope['acw'].weekdays_names : ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-          $scope['acw'].weekdays_short = $scope['acw'].weekdays_short ? $scope['acw'].weekdays_short : ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-          $scope['acw'].month_names = $scope['acw'].month_names ? $scope['acw'].month_names : ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+          $scope['acw'].weekdays_names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+          $scope['acw'].weekdays_short = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+          $scope['acw'].month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
           console.log($scope['acw']);
 
           var today = new Date();
@@ -51,6 +51,9 @@ angular.module('angularFlatCalendar', []).directive('calendarWidgetDirective', f
           $scope['acw'].currentMonthName = currentMonthName;
           $scope['acw'].today = today;
           $scope['acw'].events = {};
+
+          $scope['acw'].previousMonthCallback = function(){};
+          $scope['acw'].nextMonthCallback = function(){};
 
           // Functions
 
@@ -148,6 +151,11 @@ angular.module('angularFlatCalendar', []).directive('calendarWidgetDirective', f
 
           $scope['acw'].shiftMonth = function(value) {
             var monthYear = changeMonth($scope['acw'].currentMonth, $scope['acw'].currentYear, value);
+            if (value == 1)
+              $scope['acw'].nextMonthCallback();
+            else if (value == -1)
+              $scope['acw'].previousMonthCallback();
+
             $scope['acw'].currentMonth = monthYear['month'];
             $scope['acw'].currentYear = monthYear['year'];
             $scope['acw'].currentMonthName = $scope['acw'].month_names[$scope['acw'].currentMonth];
