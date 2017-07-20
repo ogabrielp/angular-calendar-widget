@@ -41,8 +41,7 @@ angular.module('angularFlatCalendar', []).directive('calendarWidgetDirective', f
               '</tr>'+
             '</table>'+
           '</div>'+
-        '</div>'+
-        '{{acw.today}}',
+        '</div>',
         controller: function($rootScope, $scope) {
           $scope['acw'] = {};
           $scope['acw'].weekdays_names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
