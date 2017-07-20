@@ -3,11 +3,18 @@ angular.module('angularFlatCalendar', []).directive('calendarWidgetDirective', f
         restrict: 'E',
         template: '<div id=\'angular-flat-calendar\'>'+
           '<div id=\'calendar-header\' style=\'display: flex\'>'+
+            '<div id=\'calendar-header-month-year-container\' ng-if="!acw.header_year_first">'+
+              '<span id="calendar-header-month-year-container-month">{{acw.currentMonthName}}</span>'+
+              '<span id="calendar-header-month-year-container-separator">{{acw.header_separator}}</span>'+
+              '<span id="calendar-header-month-year-container-year">{{acw.currentYear}}</span>'+
+            '</div>'+
+            '<div id=\'calendar-header-month-year-container\' ng-if="acw.header_year_first">'+
+              '<span id="calendar-header-month-year-container-year">{{acw.currentYear}}</span>'+
+              '<span id="calendar-header-month-year-container-separator">{{acw.header_separator}}</span>'+
+              '<span id="calendar-header-month-year-container-month">{{acw.currentMonthName}}</span>'+
+            '</div>'+
             '<div id=\'calendar-header-previous-month\' ng-click="acw.shiftMonth(-1)">'+
               '<span>{{acw.header_previous}}</span>'+
-            '</div>'+
-            '<div id=\'calendar-header-month-year-container\'>'+
-              '<span>{{acw.header_title}}</span>'+
             '</div>'+
             '<div id=\'calendar-header-next-month\' ng-click="acw.shiftMonth(1)">'+
               '<span>{{acw.header_next}}</span>'+
@@ -32,7 +39,7 @@ angular.module('angularFlatCalendar', []).directive('calendarWidgetDirective', f
             '</table>'+
           '</div>'+
         '</div>',
-        controller: function($scope) {
+        controller: function($rootScope, $scope) {
           $scope['acw'] = {};
           $scope['acw'].weekdays_names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
           $scope['acw'].weekdays_short = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -52,9 +59,10 @@ angular.module('angularFlatCalendar', []).directive('calendarWidgetDirective', f
           $scope['acw'].today = today;
           $scope['acw'].events = {};
 
-          $scope['acw'].header_title = $scope['acw'].currentMonthName + ' | ' + $scope['acw'].currentYear;
+          $scope['acw'].header_separator = ' | ';
           $scope['acw'].header_previous = '<';
           $scope['acw'].header_next = '>';
+          $scope['acw'].header_year_first = true;
 
           $scope['acw'].previousMonthCallback = function(){};
           $scope['acw'].nextMonthCallback = function(){};
@@ -243,6 +251,7 @@ angular.module('angularFlatCalendar', []).directive('calendarWidgetDirective', f
           }
 
           $scope['acw'].weeks = $scope['acw'].populateVisibleDays();
+          $scope.$emit('angular-calendar-widget-loaded');
         }
     };
 });

@@ -14,8 +14,9 @@ div#angular-flat-calendar div#calendar-header {
 
 div#angular-flat-calendar div#calendar-header-month-year-container {
   width: 80%;
-  text-align: center;
+  text-align: left;
   cursor: pointer;
+  padding-left: 8px;
 }
 
 div#angular-flat-calendar div#calendar-header-month-year-container:hover,
