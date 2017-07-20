@@ -4,13 +4,13 @@ angular.module('angularFlatCalendar', []).directive('calendarWidgetDirective', f
         template: '<div id=\'angular-flat-calendar\'>'+
           '<div id=\'calendar-header\' style=\'display: flex\'>'+
             '<div id=\'calendar-header-previous-month\' ng-click="acw.shiftMonth(-1)">'+
-              '<span><</span>'+
+              '<span>{{acw.header_previous}}</span>'+
             '</div>'+
             '<div id=\'calendar-header-month-year-container\'>'+
-              '{{acw.currentMonthName}} | {{acw.currentYear}}'+
+              '<span>{{acw.header_title}}</span>'+
             '</div>'+
             '<div id=\'calendar-header-next-month\' ng-click="acw.shiftMonth(1)">'+
-              '<span>></span>'+
+              '<span>{{acw.header_next}}</span>'+
             '</div>'+
           '</div>'+
           '<div id=\'calendar-days\'>'+
@@ -51,6 +51,10 @@ angular.module('angularFlatCalendar', []).directive('calendarWidgetDirective', f
           $scope['acw'].currentMonthName = currentMonthName;
           $scope['acw'].today = today;
           $scope['acw'].events = {};
+
+          $scope['acw'].header_title = $scope['acw'].currentMonthName + ' | ' + $scope['acw'].currentYear;
+          $scope['acw'].header_previous = '<';
+          $scope['acw'].header_next = '>';
 
           $scope['acw'].previousMonthCallback = function(){};
           $scope['acw'].nextMonthCallback = function(){};
