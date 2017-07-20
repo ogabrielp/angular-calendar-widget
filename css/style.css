@@ -82,6 +82,7 @@ div#angular-flat-calendar tr.calendar-days-week td.calendar-day:hover {
 div#angular-flat-calendar tr.calendar-days-week td.calendar-day.selected {
   background-color: #14DFCB;
   color: white;
+  border-radius: 50px;
 }
 
 div#angular-flat-calendar tr.calendar-days-week td.calendar-day a {
