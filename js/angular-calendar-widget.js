@@ -54,6 +54,7 @@ angular.module('angularFlatCalendar', []).directive('calendarWidgetDirective', f
 
           $scope['acw'].previousMonthCallback = function(){};
           $scope['acw'].nextMonthCallback = function(){};
+          $scope['acw'].selectDateCallback = function(){};
 
           // Functions
 
@@ -174,6 +175,7 @@ angular.module('angularFlatCalendar', []).directive('calendarWidgetDirective', f
               $scope['acw'].currentMonthName = $scope['acw'].month_names[$scope['acw'].currentMonth];
               $scope['acw'].weeks = $scope['acw'].populateVisibleDays();
             }
+            $scope['acw'].selectDateCallback();
           }
 
           $scope['acw'].formatDate = function(date) {
