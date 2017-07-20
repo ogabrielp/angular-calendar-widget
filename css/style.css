@@ -23,14 +23,17 @@ div#angular-flat-calendar div#calendar-header-month-year-container {
 
 div#angular-flat-calendar div#calendar-header-month-year-container:hover,
 div#angular-flat-calendar div#calendar-header-previous-month:hover,
-div#angular-flat-calendar div#calendar-header-next-month:hover {
+div#angular-flat-calendar div#calendar-header-next-month:hover,
+div#angular-flat-calendar div#calendar-header-today:hover {
   background: #2D2F3B;
 }
 
 div#angular-flat-calendar div#calendar-header-previous-month,
-div#angular-flat-calendar div#calendar-header-next-month {
+div#angular-flat-calendar div#calendar-header-next-month,
+div#angular-flat-calendar div#calendar-header-today {
   width: 10%;
   text-align: center;
+  color: white;
 }
 
 div#angular-flat-calendar div#calendar-days table tr td.calendar-day.disabled {

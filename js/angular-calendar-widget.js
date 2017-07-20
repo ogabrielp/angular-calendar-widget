@@ -16,6 +16,9 @@ angular.module('angularFlatCalendar', []).directive('calendarWidgetDirective', f
             '<div id=\'calendar-header-previous-month\' ng-click="acw.shiftMonth(-1)">'+
               '<span>{{acw.header_previous}}</span>'+
             '</div>'+
+            '<div id=\'calendar-header-today\' ng-click="acw.setSelectedDate(acw.today.getDate(), acw.today.getMonth()+1, acw.today.getFullYear())">'+
+              '<span>{{acw.header_today}}</span>'+
+            '</div>'+
             '<div id=\'calendar-header-next-month\' ng-click="acw.shiftMonth(1)">'+
               '<span>{{acw.header_next}}</span>'+
             '</div>'+
@@ -38,7 +41,8 @@ angular.module('angularFlatCalendar', []).directive('calendarWidgetDirective', f
               '</tr>'+
             '</table>'+
           '</div>'+
-        '</div>',
+        '</div>'+
+        '{{acw.today}}',
         controller: function($rootScope, $scope) {
           $scope['acw'] = {};
           $scope['acw'].weekdays_names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -61,6 +65,7 @@ angular.module('angularFlatCalendar', []).directive('calendarWidgetDirective', f
 
           $scope['acw'].header_separator = ' | ';
           $scope['acw'].header_previous = '<';
+          $scope['acw'].header_today = '●';
           $scope['acw'].header_next = '>';
           $scope['acw'].header_year_first = true;
 
@@ -182,9 +187,14 @@ angular.module('angularFlatCalendar', []).directive('calendarWidgetDirective', f
 
           $scope['acw'].setSelectedDate = function(day, month, year) {
             $scope['acw'].selectedDate = new Date(year, month-1, day);
+            console.log('setting selected date to '+$scope['acw'].selectedDate);
             if (month-1 != $scope['acw'].currentMonth) {
               $scope['acw'].currentMonth = month-1;
               $scope['acw'].currentMonthName = $scope['acw'].month_names[$scope['acw'].currentMonth];
+              $scope['acw'].weeks = $scope['acw'].populateVisibleDays();
+            }
+            if (year != $scope['acw'].currentYear) {
+              $scope['acw'].currentYear = year;
               $scope['acw'].weeks = $scope['acw'].populateVisibleDays();
             }
             $scope['acw'].selectDateCallback();
