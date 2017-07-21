@@ -1,7 +1,7 @@
-angular.module('angularFlatCalendar', []).directive('calendarWidgetDirective', function () {
+angular.module('angularCalendarWidget', []).directive('calendarWidget', function () {
     return {
         restrict: 'E',
-        template: '<div id=\'angular-flat-calendar\'>'+
+        template: '<div id=\'angular-calendar-widget\'>'+
           '<div id=\'calendar-header\' style=\'display: flex\'>'+
             '<div id=\'calendar-header-month-year-container\' ng-if="!acw.header_year_first">'+
               '<span id="calendar-header-month-year-container-month">{{acw.currentMonthName}}</span>'+
@@ -172,7 +172,7 @@ angular.module('angularFlatCalendar', []).directive('calendarWidgetDirective', f
             $scope['acw'].currentYear = monthYear['year'];
             $scope['acw'].currentMonthName = $scope['acw'].month_names[$scope['acw'].currentMonth];
             $scope['acw'].weeks = $scope['acw'].populateVisibleDays();
-            
+
             if (value == 1)
               $scope['acw'].nextMonthCallback();
             else if (value == -1)

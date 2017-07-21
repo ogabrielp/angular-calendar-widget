@@ -1,10 +1,10 @@
-div#angular-flat-calendar {
+div#angular-calendar-widget {
   display: inline-block;
   font-family: 'Quicksand', sans-serif;
   background: #1D1F2B;
 }
 
-div#angular-flat-calendar div#calendar-header {
+div#angular-calendar-widget div#calendar-header {
   background: #1D1F2B;
   color: white;
   height: 40px;
@@ -13,7 +13,7 @@ div#angular-flat-calendar div#calendar-header {
   padding: 30px 25px 5px 25px;
 }
 
-div#angular-flat-calendar div#calendar-header-month-year-container {
+div#angular-calendar-widget div#calendar-header-month-year-container {
   width: 80%;
   text-align: left;
   cursor: pointer;
@@ -22,57 +22,57 @@ div#angular-flat-calendar div#calendar-header-month-year-container {
   transition: background 300ms;
 }
 
-div#angular-flat-calendar div#calendar-header-month-year-container:hover,
-div#angular-flat-calendar div#calendar-header-previous-month:hover,
-div#angular-flat-calendar div#calendar-header-next-month:hover,
-div#angular-flat-calendar div#calendar-header-today:hover {
+div#angular-calendar-widget div#calendar-header-month-year-container:hover,
+div#angular-calendar-widget div#calendar-header-previous-month:hover,
+div#angular-calendar-widget div#calendar-header-next-month:hover,
+div#angular-calendar-widget div#calendar-header-today:hover {
   background: #2D2F3B;
 }
 
-div#angular-flat-calendar div#calendar-header-previous-month,
-div#angular-flat-calendar div#calendar-header-next-month,
-div#angular-flat-calendar div#calendar-header-today {
+div#angular-calendar-widget div#calendar-header-previous-month,
+div#angular-calendar-widget div#calendar-header-next-month,
+div#angular-calendar-widget div#calendar-header-today {
   width: 10%;
   text-align: center;
   color: white;
   transition: background 300ms;
 }
 
-div#angular-flat-calendar div#calendar-days table tr td.calendar-day.disabled {
+div#angular-calendar-widget div#calendar-days table tr td.calendar-day.disabled {
   color: #5D5D6F;
 }
 
-div#angular-flat-calendar div#calendar-days table tr td.calendar-day.disabled.selected {
+div#angular-calendar-widget div#calendar-days table tr td.calendar-day.disabled.selected {
   background: #999;
 }
 
-div#angular-flat-calendar tr.calendar-days-week td.calendar-day.calendar-day-today {
+div#angular-calendar-widget tr.calendar-days-week td.calendar-day.calendar-day-today {
   color: #14DFCB;
   font-weight: bold;
 }
 
-div#angular-flat-calendar td {
+div#angular-calendar-widget td {
   width: 50px;
   height: 50px;
   text-align: center;
 }
 
-div#angular-flat-calendar div#calendar-days {
+div#angular-calendar-widget div#calendar-days {
   padding-bottom: 20px;
 }
 
-div#angular-flat-calendar div#calendar-days table {
+div#angular-calendar-widget div#calendar-days table {
   border-spacing: 0;
   width: 100%;
   border-collapse: collapse;
   display: table;
 }
 
-div#angular-flat-calendar div#calendar-days table tbody {
+div#angular-calendar-widget div#calendar-days table tbody {
   display: grid;
 }
 
-div#angular-flat-calendar tr#calendar-days-weekdays-name {
+div#angular-calendar-widget tr#calendar-days-weekdays-name {
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
@@ -81,37 +81,37 @@ div#angular-flat-calendar tr#calendar-days-weekdays-name {
   padding: 0 20px;
 }
 
-div#angular-flat-calendar tr.calendar-days-week:nth-child(even) {
+div#angular-calendar-widget tr.calendar-days-week:nth-child(even) {
   background: #1D1F2B;
   padding: 0 20px;
 }
 
-div#angular-flat-calendar tr.calendar-days-week:nth-child(odd) {
+div#angular-calendar-widget tr.calendar-days-week:nth-child(odd) {
   background: #1D1F2B;
   padding: 0 20px;
 }
 
-div#angular-flat-calendar tr.calendar-days-week td.calendar-day {
+div#angular-calendar-widget tr.calendar-days-week td.calendar-day {
   border-radius: 50px;
   color: white;
   cursor: pointer;
   transition: background 300ms;
 }
 
-div#angular-flat-calendar tr.calendar-days-week td.calendar-day:hover {
+div#angular-calendar-widget tr.calendar-days-week td.calendar-day:hover {
   background: #2B2B3F;
 }
 
-div#angular-flat-calendar tr.calendar-days-week td.calendar-day.selected {
+div#angular-calendar-widget tr.calendar-days-week td.calendar-day.selected {
   background-color: #14DFCB;
   color: white;
   border-radius: 50px;
 }
 
-div#angular-flat-calendar tr.calendar-days-week td.calendar-day a {
+div#angular-calendar-widget tr.calendar-days-week td.calendar-day a {
   line-height: 100%;
 }
 
-div#angular-flat-calendar tr.calendar-days-week td.calendar-day.has-events a {
+div#angular-calendar-widget tr.calendar-days-week td.calendar-day.has-events a {
   border-bottom: 2px solid red;
 }
