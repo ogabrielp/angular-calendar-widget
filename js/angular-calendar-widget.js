@@ -117,9 +117,7 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
             return daysPerWeek;
           }
 
-          // Scope functions
-
-          $scope['acw'].populateVisibleDays = function() {
+          function populateVisibleDays() {
             var visibleDays = [];
             var day = 1;
             var firstWeekday = getFirstWeekday($scope['acw'].currentMonth, $scope['acw'].currentYear);
@@ -171,13 +169,15 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
             return breakIntoWeeks(visibleDays, 6);
           }
 
+          // Scope functions
+
           $scope['acw'].shiftMonth = function(value) {
             var monthYear = changeMonth($scope['acw'].currentMonth, $scope['acw'].currentYear, value);
 
             $scope['acw'].currentMonth = monthYear['month'];
             $scope['acw'].currentYear = monthYear['year'];
             $scope['acw'].currentMonthName = $scope['acw'].month_names[$scope['acw'].currentMonth];
-            $scope['acw'].weeks = $scope['acw'].populateVisibleDays();
+            $scope['acw'].weeks = populateVisibleDays();
 
             if (value == 1)
               $scope['acw'].nextMonthCallback();
@@ -198,11 +198,11 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
             if (month != $scope['acw'].currentMonth) {
               $scope['acw'].currentMonth = month;
               $scope['acw'].currentMonthName = $scope['acw'].month_names[$scope['acw'].currentMonth];
-              $scope['acw'].weeks = $scope['acw'].populateVisibleDays();
+              $scope['acw'].weeks = populateVisibleDays();
             }
             if (year != $scope['acw'].currentYear) {
               $scope['acw'].currentYear = year;
-              $scope['acw'].weeks = $scope['acw'].populateVisibleDays();
+              $scope['acw'].weeks = populateVisibleDays();
             }
             $scope['acw'].selectDateCallback();
           }
@@ -252,7 +252,7 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
             }
           }
 
-          $scope['acw'].weeks = $scope['acw'].populateVisibleDays();
+          $scope['acw'].weeks = populateVisibleDays();
           $scope.$emit('angular-calendar-widget-loaded');
         }
     };
