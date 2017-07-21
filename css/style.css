@@ -112,6 +112,6 @@ div#angular-calendar-widget tr.calendar-days-week td.calendar-day a {
   line-height: 100%;
 }
 
-div#angular-calendar-widget tr.calendar-days-week td.calendar-day.has-events a {
-  border-bottom: 2px solid red;
+div#angular-calendar-widget tr.calendar-days-week td.calendar-day.has-events span {
+  border-bottom: 2px solid #14DFCB;
 }
