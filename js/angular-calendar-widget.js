@@ -43,19 +43,12 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
           '</div>'+
         '</div>',
         controller: function($rootScope, $scope) {
-          // Declarations
-
           $scope['acw'] = {};
+
+          // External declarations (can be altered via their respective setters)
           $scope['acw'].weekdays_names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
           $scope['acw'].weekdays_short = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
           $scope['acw'].month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-          $scope['acw'].today = new Date();
-          $scope['acw'].selectedDate = $scope['acw'].today
-          $scope['acw'].currentMonth = $scope['acw'].today.getMonth();
-          $scope['acw'].currentMonthName = $scope['acw'].month_names[$scope['acw'].currentMonth];
-          $scope['acw'].currentYear = $scope['acw'].today.getFullYear();
-          $scope['acw'].events = {};
 
           $scope['acw'].header_separator = ' | ';
           $scope['acw'].header_previous = '<';
@@ -67,8 +60,15 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
           $scope['acw'].nextMonthCallback = function(){};
           $scope['acw'].selectDateCallback = function(){};
 
-          // Functions
+          // Internal declarations (overriding them may lead to inconsistent behaviour)
+          $scope['acw'].today = new Date();
+          $scope['acw'].selectedDate = $scope['acw'].today
+          $scope['acw'].currentMonth = $scope['acw'].today.getMonth();
+          $scope['acw'].currentMonthName = $scope['acw'].month_names[$scope['acw'].currentMonth];
+          $scope['acw'].currentYear = $scope['acw'].today.getFullYear();
+          $scope['acw'].events = {};
 
+          // Internal functions (not accessible to the library user)
           function daysInMonth(month, year) {
             return new Date(year, month+1, 0).getDate();
           }
@@ -165,8 +165,7 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
             return breakIntoWeeks(visibleDays, 6);
           }
 
-          // Scope functions
-
+          // Internal scope functions (should only be used by the directive)
           $scope['acw'].shiftMonth = function(value) {
             var monthYear = changeMonth($scope['acw'].currentMonth, $scope['acw'].currentYear, value);
 
@@ -204,9 +203,10 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
           }
 
           $scope['acw'].formatDate = function(date) {
-              return date.getDate() + '/' + (parseInt(date.getMonth())+1) + '/' + date.getFullYear();
+            return date.getDate() + '/' + (parseInt(date.getMonth())+1) + '/' + date.getFullYear();
           }
 
+          // External scope functions (can be used by the library user)
           $scope['acw'].addEvent = function(title, date) {
             if (!$scope['acw'].events[date.getFullYear()]) {
               $scope['acw'].events[date.getFullYear()] = {};
@@ -248,6 +248,10 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
             }
           }
 
+          // Setters
+          
+
+          //Initialize calendar and broadcast when it's ready
           $scope['acw'].weeks = populateVisibleDays();
           $scope.$emit('angular-calendar-widget-loaded');
         }
