@@ -46,7 +46,6 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
           $scope['acw'] = {};
 
           // External declarations (can be altered via their respective setters)
-          $scope['acw'].weekdays_names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
           $scope['acw'].weekdays_short = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
           $scope['acw'].month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -249,7 +248,59 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
           }
 
           // Setters
-          
+          $scope['acw'].setWeekdaysShort = function(array) {
+            var validEntries = 0;
+
+            if (array.length == 'undefined') {
+              console.error('[setWeekdaysShort] Invalid value. '+
+              'Please make sure it is an ARRAY of strings with length == 7.');
+            } else if (array.length != 7) {
+              console.error('[setWeekdaysShort] Mismatched lengths. '+
+              'The array should have length == 7.\n\nActual length: '+array.length);
+            } else {
+              for (var i = 0; i < array.length; i++) {
+                if (typeof(array[i]) != 'string')
+                  break;
+                else
+                  validEntries++;
+              }
+
+              if (validEntries == array.length)
+                $scope['acw'].weekdays_short = array;
+              else
+                console.error('[setWeekdaysShort] Mismatched types. '+
+                'One of the items in your array isn\'t a string.\n\n'+
+                'Position: '+i+'\nValue: '+array[i]+' (type: '+typeof(array[i])+')');
+            }
+          }
+
+          $scope['acw'].setMonthNames = function(array) {
+            var validEntries = 0;
+
+            if (array.length == 'undefined') {
+              console.error('[setMonthNames] Invalid value. '+
+              'Please make sure it is an ARRAY of strings with length == 12.');
+            } else if (array.length != 12) {
+              console.error('[setMonthNames] Mismatched lengths. '+
+              'The array should have length == 12.\n\nActual length: '+array.length);
+            } else {
+              for (var i = 0; i < array.length; i++) {
+                if (typeof(array[i]) != 'string')
+                  break;
+                else
+                  validEntries++;
+              }
+
+              if (validEntries == array.length) {
+                $scope['acw'].month_names = array;
+                $scope['acw'].currentMonthName = array[$scope['acw'].currentMonth];
+              }
+              else
+                console.error('[setMonthNames] Mismatched types. '+
+                'One of the items in your array isn\'t a string.\n\n'+
+                'Position: '+i+'\nValue: '+array[i]+' (type: '+typeof(array[i])+')');
+            }
+          }
 
           //Initialize calendar and broadcast when it's ready
           $scope['acw'].weeks = populateVisibleDays();
