@@ -43,22 +43,18 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
           '</div>'+
         '</div>',
         controller: function($rootScope, $scope) {
+          // Declarations
+
           $scope['acw'] = {};
           $scope['acw'].weekdays_names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
           $scope['acw'].weekdays_short = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
           $scope['acw'].month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-          var today = new Date();
-          var currentMonth = today.getMonth();
-          var currentMonthName = $scope['acw'].month_names[currentMonth];
-          var currentYear = today.getFullYear();
-
-          $scope['acw'].selectedDate = today;
-          $scope['acw'].currentMonth = currentMonth;
-          $scope['acw'].currentMonthName = currentMonthName;
-          $scope['acw'].currentYear = currentYear;
-          $scope['acw'].currentMonthName = currentMonthName;
-          $scope['acw'].today = today;
+          $scope['acw'].today = new Date();
+          $scope['acw'].selectedDate = $scope['acw'].today
+          $scope['acw'].currentMonth = $scope['acw'].today.getMonth();
+          $scope['acw'].currentMonthName = $scope['acw'].month_names[$scope['acw'].currentMonth];
+          $scope['acw'].currentYear = $scope['acw'].today.getFullYear();
           $scope['acw'].events = {};
 
           $scope['acw'].header_separator = ' | ';
