@@ -33,7 +33,7 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
               '<tr class="calendar-days-week" ng-repeat="week in acw.weeks track by $index" ng-attr-id="calendar-days-week-{{$index+1}}">'+
                 '<td ng-repeat="day in week"'+
                     'ng-attr-id="calendar-day-date-{{day.day}}-{{day.month}}-{{day.year}}"'+
-                    'class="calendar-day"'+
+                    'class="calendar-day calendar-day-date-{{day.day}} calendar-day-month-{{day.month}} calendar-day-year-{{day.year}}"'+
                     'ng-class="{\'calendar-day-today\': acw.isToday(day.date), \'disabled\': day.month != acw.currentMonth+1, \'selected\': acw.formatDate(day.date) == acw.formatDate(acw.selectedDate), \'has-events\': acw.dateHasEvents(day.date)}"'+
                     'ng-click="acw.setSelectedDate(day.date)">'+
                   '<span>{{day.day}}</span>'+
