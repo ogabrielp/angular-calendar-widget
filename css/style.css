@@ -10,7 +10,7 @@ div#angular-calendar-widget div#calendar-header {
   height: 40px;
   cursor: pointer;
   line-height: 40px;
-  padding: 30px 25px 5px 25px;
+  margin: 30px 25px 5px 25px;
 }
 
 div#angular-calendar-widget div#calendar-header-month-year-container {
