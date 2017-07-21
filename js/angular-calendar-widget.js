@@ -207,33 +207,43 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
 
           // External scope functions (can be used by the library user)
           $scope['acw'].addEvent = function(title, date) {
-            if (!$scope['acw'].events[date.getFullYear()]) {
-              $scope['acw'].events[date.getFullYear()] = {};
+            if (typeof(date.getDate) == typeof(date.getMonth) &&
+                typeof(date.getMonth) == typeof(date.getFullYear) &&
+                typeof(date.getFullYear) != 'undefined') {
+
+              if (!$scope['acw'].events[date.getFullYear()]) {
+                $scope['acw'].events[date.getFullYear()] = {};
+              }
+
+              if (!$scope['acw'].events[date.getFullYear()][date.getMonth()+1]) {
+                $scope['acw'].events[date.getFullYear()][date.getMonth()+1] = {};
+              }
+
+              if (!$scope['acw'].events[date.getFullYear()][date.getMonth()+1][date.getDate()]) {
+                $scope['acw'].events[date.getFullYear()][date.getMonth()+1][date.getDate()] = [];
+              }
+
+              $scope['acw'].events[date.getFullYear()][date.getMonth()+1][date.getDate()].push({
+                'title': title,
+              });
+
+              $scope['acw'].eventTitle = '';
+            } else {
+              console.error('[addEvent] Mismatched types. You should provide a '+
+              'Date object.');
             }
-
-            if (!$scope['acw'].events[date.getFullYear()][date.getMonth()+1]) {
-              $scope['acw'].events[date.getFullYear()][date.getMonth()+1] = {};
-            }
-
-            if (!$scope['acw'].events[date.getFullYear()][date.getMonth()+1][date.getDate()]) {
-              $scope['acw'].events[date.getFullYear()][date.getMonth()+1][date.getDate()] = [];
-            }
-
-            $scope['acw'].events[date.getFullYear()][date.getMonth()+1][date.getDate()].push({
-              'title': title,
-            });
-
-            $scope['acw'].eventTitle = '';
           }
 
           $scope['acw'].dateHasEvents = function(date) {
-            if(typeof(date.getDate) != 'undefined') {
+            if(typeof(date.getDate) != 'undefined' && typeof(date.getMonth) != 'undefined' &&
+               typeof(date.getFullYear) != 'undefined') {
               return $scope['acw'].events[date.getFullYear()] != undefined &&
               $scope['acw'].events[date.getFullYear()][date.getMonth()+1] != undefined &&
               $scope['acw'].events[date.getFullYear()][date.getMonth()+1][date.getDate()] != undefined &&
               $scope['acw'].events[date.getFullYear()][date.getMonth()+1][date.getDate()].length > 0;
             } else {
-              console.error('Malformed object.');
+              console.error('[dateHasEvents] Mismatched types. You should provide '+
+              'a Date object.');
               return false;
             }
           }
@@ -304,7 +314,7 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
 
           //Initialize calendar and broadcast when it's ready
           $scope['acw'].weeks = populateVisibleDays();
-          $scope.$emit('angular-calendar-widget-loaded');
+          $rootScope.$broadcast('angular-calendar-widget-loaded');
         }
     };
 });
