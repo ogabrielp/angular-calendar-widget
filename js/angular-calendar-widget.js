@@ -4,14 +4,14 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
         template: '<div id=\'angular-calendar-widget\'>'+
           '<div id=\'calendar-header\' style=\'display: flex\'>'+
             '<div id=\'calendar-header-month-year-container\' ng-if="!acw.header_year_first">'+
-              '<span id="calendar-header-month-year-container-month">{{acw.currentMonthName}}</span>'+
+              '<span id="calendar-header-month-year-container-month">{{acw.currentlyViewingMonthName}}</span>'+
               '<span id="calendar-header-month-year-container-separator">{{acw.header_separator}}</span>'+
-              '<span id="calendar-header-month-year-container-year">{{acw.currentYear}}</span>'+
+              '<span id="calendar-header-month-year-container-year">{{acw.currentlyViewingYear}}</span>'+
             '</div>'+
             '<div id=\'calendar-header-month-year-container\' ng-if="acw.header_year_first">'+
-              '<span id="calendar-header-month-year-container-year">{{acw.currentYear}}</span>'+
+              '<span id="calendar-header-month-year-container-year">{{acw.currentlyViewingYear}}</span>'+
               '<span id="calendar-header-month-year-container-separator">{{acw.header_separator}}</span>'+
-              '<span id="calendar-header-month-year-container-month">{{acw.currentMonthName}}</span>'+
+              '<span id="calendar-header-month-year-container-month">{{acw.currentlyViewingMonthName}}</span>'+
             '</div>'+
             '<div id=\'calendar-header-previous-month\' ng-click="acw.shiftMonth(-1)">'+
               '<span>{{acw.header_previous}}</span>'+
@@ -34,7 +34,7 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
                 '<td ng-repeat="day in week"'+
                     'ng-attr-id="calendar-day-date-{{day.day}}-{{day.month}}-{{day.year}}"'+
                     'class="calendar-day calendar-day-date-{{day.day}} calendar-day-month-{{day.month}} calendar-day-year-{{day.year}}"'+
-                    'ng-class="{\'calendar-day-today\': acw.isToday(day.date), \'disabled\': day.month != acw.currentMonth+1, \'selected\': acw.formatDate(day.date) == acw.formatDate(acw.selectedDate), \'has-events\': acw.dateHasEvents(day.date)}"'+
+                    'ng-class="{\'calendar-day-today\': acw.isToday(day.date), \'disabled\': day.month != acw.currentlyViewingMonth+1, \'selected\': acw.formatDate(day.date) == acw.formatDate(acw.selectedDate), \'has-events\': acw.dateHasEvents(day.date)}"'+
                     'ng-click="acw.setSelectedDate(day.date)">'+
                   '<span>{{day.day}}</span>'+
                 '</td>'+
@@ -53,7 +53,7 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
           $scope['acw'].header_previous = '<';
           $scope['acw'].header_today = '●';
           $scope['acw'].header_next = '>';
-          $scope['acw'].header_year_first = true;
+          $scope['acw'].header_year_first = false;
 
           $scope['acw'].previousMonthCallback = function(){};
           $scope['acw'].nextMonthCallback = function(){};
@@ -62,9 +62,9 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
           // Internal declarations (overriding them may lead to inconsistent behaviour)
           $scope['acw'].today = new Date();
           $scope['acw'].selectedDate = $scope['acw'].today
-          $scope['acw'].currentMonth = $scope['acw'].today.getMonth();
-          $scope['acw'].currentMonthName = $scope['acw'].month_names[$scope['acw'].currentMonth];
-          $scope['acw'].currentYear = $scope['acw'].today.getFullYear();
+          $scope['acw'].currentlyViewingMonth = $scope['acw'].today.getMonth();
+          $scope['acw'].currentlyViewingMonthName = $scope['acw'].month_names[$scope['acw'].currentlyViewingMonth];
+          $scope['acw'].currentlyViewingYear = $scope['acw'].today.getFullYear();
           $scope['acw'].events = {};
 
           // Internal functions (not accessible to the library user)
@@ -115,21 +115,21 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
           function populateVisibleDays() {
             var visibleDays = [];
             var day = 1;
-            var firstWeekday = getFirstWeekday($scope['acw'].currentMonth, $scope['acw'].currentYear);
-            var monthLength = daysInMonth($scope['acw'].currentMonth, $scope['acw'].currentYear);
+            var firstWeekday = getFirstWeekday($scope['acw'].currentlyViewingMonth, $scope['acw'].currentlyViewingYear);
+            var monthLength = daysInMonth($scope['acw'].currentlyViewingMonth, $scope['acw'].currentlyViewingYear);
 
             for (var i = firstWeekday; day <= monthLength; i++) {
               visibleDays[i] = {
                 'day': day,
-                'month': parseInt($scope['acw'].currentMonth)+1,
-                'year': $scope['acw'].currentYear,
+                'month': parseInt($scope['acw'].currentlyViewingMonth)+1,
+                'year': $scope['acw'].currentlyViewingYear,
               };
               var k = visibleDays[i];
               visibleDays[i].date = new Date(k.year, k.month-1, k.day);
               day++;
             }
 
-            var previousMonthYear = changeMonth($scope['acw'].currentMonth, $scope['acw'].currentYear, -1);
+            var previousMonthYear = changeMonth($scope['acw'].currentlyViewingMonth, $scope['acw'].currentlyViewingYear, -1);
             var previousMonth = previousMonthYear['month'];
             var previousYear = previousMonthYear['year'];
             var previousMonthLength = daysInMonth(previousMonth, previousYear);
@@ -145,7 +145,7 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
               previousMonthLength -= 1;
             }
 
-            var nextMonthYear = changeMonth($scope['acw'].currentMonth, $scope['acw'].currentYear, 1);
+            var nextMonthYear = changeMonth($scope['acw'].currentlyViewingMonth, $scope['acw'].currentlyViewingYear, 1);
             var nextMonth = nextMonthYear['month'];
             var nextYear = nextMonthYear['year'];
             day = 1;
@@ -166,11 +166,11 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
 
           // Internal scope functions (should only be used by the directive)
           $scope['acw'].shiftMonth = function(value) {
-            var monthYear = changeMonth($scope['acw'].currentMonth, $scope['acw'].currentYear, value);
+            var monthYear = changeMonth($scope['acw'].currentlyViewingMonth, $scope['acw'].currentlyViewingYear, value);
 
-            $scope['acw'].currentMonth = monthYear['month'];
-            $scope['acw'].currentYear = monthYear['year'];
-            $scope['acw'].currentMonthName = $scope['acw'].month_names[$scope['acw'].currentMonth];
+            $scope['acw'].currentlyViewingMonth = monthYear['month'];
+            $scope['acw'].currentlyViewingYear = monthYear['year'];
+            $scope['acw'].currentlyViewingMonthName = $scope['acw'].month_names[$scope['acw'].currentlyViewingMonth];
             $scope['acw'].weeks = populateVisibleDays();
 
             if (value == 1)
@@ -189,13 +189,13 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
             var year = date.getFullYear();
 
             $scope['acw'].selectedDate = date;
-            if (month != $scope['acw'].currentMonth) {
-              $scope['acw'].currentMonth = month;
-              $scope['acw'].currentMonthName = $scope['acw'].month_names[$scope['acw'].currentMonth];
+            if (month != $scope['acw'].currentlyViewingMonth) {
+              $scope['acw'].currentlyViewingMonth = month;
+              $scope['acw'].currentlyViewingMonthName = $scope['acw'].month_names[$scope['acw'].currentlyViewingMonth];
               $scope['acw'].weeks = populateVisibleDays();
             }
-            if (year != $scope['acw'].currentYear) {
-              $scope['acw'].currentYear = year;
+            if (year != $scope['acw'].currentlyViewingYear) {
+              $scope['acw'].currentlyViewingYear = year;
               $scope['acw'].weeks = populateVisibleDays();
             }
             $scope['acw'].selectDateCallback();
@@ -303,7 +303,7 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
 
               if (validEntries == array.length) {
                 $scope['acw'].month_names = array;
-                $scope['acw'].currentMonthName = array[$scope['acw'].currentMonth];
+                $scope['acw'].currentlyViewingMonthName = array[$scope['acw'].currentlyViewingMonth];
               }
               else
                 console.error('[setMonthNames] Mismatched types. '+
