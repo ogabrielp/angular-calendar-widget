@@ -226,8 +226,6 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
               $scope['acw'].events[date.getFullYear()][date.getMonth()+1][date.getDate()].push({
                 'title': title,
               });
-
-              $scope['acw'].eventTitle = '';
             } else {
               console.error('[addEvent] Mismatched types. You should provide a '+
               'Date object.');
