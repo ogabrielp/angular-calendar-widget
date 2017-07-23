@@ -57,8 +57,10 @@ div#angular-calendar-widget td {
   text-align: center;
 }
 
-div#angular-calendar-widget div#calendar-days {
+div#angular-calendar-widget div#calendar-view {
   padding-bottom: 20px;
+  width: 404px;
+  height: 350px;
 }
 
 div#angular-calendar-widget div#calendar-days table {
@@ -99,7 +101,7 @@ div#angular-calendar-widget tr.calendar-days-week td.calendar-day {
 }
 
 div#angular-calendar-widget tr.calendar-days-week td.calendar-day:hover {
-  background: #2B2B3F;
+  background: #2D2F3B;
 }
 
 div#angular-calendar-widget tr.calendar-days-week td.calendar-day.selected {
@@ -114,4 +116,24 @@ div#angular-calendar-widget tr.calendar-days-week td.calendar-day a {
 
 div#angular-calendar-widget tr.calendar-days-week td.calendar-day.has-events span {
   border-bottom: 2px solid #14DFCB;
+}
+
+div#angular-calendar-widget div#calendar-view div#calendar-months table,
+div#angular-calendar-widget div#calendar-view div#calendar-years table {
+  width: 100%;
+  height: 100%;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+div#angular-calendar-widget div#calendar-view div#calendar-years table {
+  padding: 0 15px;
+}
+
+div#angular-calendar-widget div#calendar-view td:hover {
+  background: #2D2F3B;
+  transition: background 300ms;
+  cursor: pointer;
 }
