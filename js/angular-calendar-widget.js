@@ -66,36 +66,37 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
         '</div>',
         controller: function($rootScope, $scope) {
           $scope['acw'] = {};
+          var acw = $scope['acw'];
 
           // External declarations (can be altered via their respective setters)
-          $scope['acw'].weekdays_short = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-          $scope['acw'].month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-          $scope['acw'].month_names_short = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          acw.weekdays_short = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+          acw.month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+          acw.month_names_short = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-          $scope['acw'].header_separator = ' | ';
-          $scope['acw'].header_previous = '<';
-          $scope['acw'].header_today = '●';
-          $scope['acw'].header_next = '>';
-          $scope['acw'].header_year_first = false;
+          acw.header_separator = ' | ';
+          acw.header_previous = '<';
+          acw.header_today = '●';
+          acw.header_next = '>';
+          acw.header_year_first = false;
 
-          $scope['acw'].previousMonthCallback = function(){};
-          $scope['acw'].nextMonthCallback = function(){};
-          $scope['acw'].selectDateCallback = function(){};
+          acw.previousMonthCallback = function(){};
+          acw.nextMonthCallback = function(){};
+          acw.selectDateCallback = function(){};
 
-          $scope['acw'].CALENDAR_VIEWS = {
+          acw.CALENDAR_VIEWS = {
             DAY: 0,
             MONTH: 1,
             YEAR: 2
           }
-          $scope['acw'].currentView = $scope['acw'].CALENDAR_VIEWS.DAY;
+          acw.currentView = acw.CALENDAR_VIEWS.DAY;
 
           // Internal declarations (overriding them may lead to inconsistent behaviour)
-          $scope['acw'].today = new Date();
-          $scope['acw'].selectedDate = $scope['acw'].today
-          $scope['acw'].currentlyViewingMonth = $scope['acw'].today.getMonth();
-          $scope['acw'].currentlyViewingMonthName = $scope['acw'].month_names[$scope['acw'].currentlyViewingMonth];
-          $scope['acw'].currentlyViewingYear = $scope['acw'].today.getFullYear();
-          $scope['acw'].events = {};
+          acw.today = new Date();
+          acw.selectedDate = acw.today
+          acw.currentlyViewingMonth = acw.today.getMonth();
+          acw.currentlyViewingMonthName = acw.month_names[acw.currentlyViewingMonth];
+          acw.currentlyViewingYear = acw.today.getFullYear();
+          acw.events = {};
 
           // Internal functions (not accessible to the library user)
           function daysInMonth(month, year) {
@@ -143,7 +144,7 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
           }
 
           function calculateDecades() {
-            var startingDecade = parseInt($scope['acw'].currentlyViewingYear/10);
+            var startingDecade = parseInt(acw.currentlyViewingYear/10);
             startingDecade = startingDecade % 2 == 0 ? startingDecade : startingDecade-1;
 
             var obj = {};
@@ -155,21 +156,21 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
           function populateVisibleDays() {
             var visibleDays = [];
             var day = 1;
-            var firstWeekday = getFirstWeekday($scope['acw'].currentlyViewingMonth, $scope['acw'].currentlyViewingYear);
-            var monthLength = daysInMonth($scope['acw'].currentlyViewingMonth, $scope['acw'].currentlyViewingYear);
+            var firstWeekday = getFirstWeekday(acw.currentlyViewingMonth, acw.currentlyViewingYear);
+            var monthLength = daysInMonth(acw.currentlyViewingMonth, acw.currentlyViewingYear);
 
             for (var i = firstWeekday; day <= monthLength; i++) {
               visibleDays[i] = {
                 'day': day,
-                'month': parseInt($scope['acw'].currentlyViewingMonth)+1,
-                'year': $scope['acw'].currentlyViewingYear,
+                'month': parseInt(acw.currentlyViewingMonth)+1,
+                'year': acw.currentlyViewingYear,
               };
               var k = visibleDays[i];
               visibleDays[i].date = new Date(k.year, k.month-1, k.day);
               day++;
             }
 
-            var previousMonthYear = changeMonth($scope['acw'].currentlyViewingMonth, $scope['acw'].currentlyViewingYear, -1);
+            var previousMonthYear = changeMonth(acw.currentlyViewingMonth, acw.currentlyViewingYear, -1);
             var previousMonth = previousMonthYear['month'];
             var previousYear = previousMonthYear['year'];
             var previousMonthLength = daysInMonth(previousMonth, previousYear);
@@ -185,7 +186,7 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
               previousMonthLength -= 1;
             }
 
-            var nextMonthYear = changeMonth($scope['acw'].currentlyViewingMonth, $scope['acw'].currentlyViewingYear, 1);
+            var nextMonthYear = changeMonth(acw.currentlyViewingMonth, acw.currentlyViewingYear, 1);
             var nextMonth = nextMonthYear['month'];
             var nextYear = nextMonthYear['year'];
             day = 1;
@@ -210,7 +211,7 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
             var columns = 12/rows;
 
             for (var i = 0; i < rows; i++) {
-              months.push($scope['acw'].month_names_short.slice(columns*i, columns*i+columns));
+              months.push(acw.month_names_short.slice(columns*i, columns*i+columns));
             }
             return months;
           }
@@ -236,125 +237,125 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
           }
 
           // Internal scope functions (should only be used by the directive)
-          $scope['acw'].shiftMonth = function(value) {
-            var monthYear = changeMonth($scope['acw'].currentlyViewingMonth, $scope['acw'].currentlyViewingYear, value);
+          acw.shiftMonth = function(value) {
+            var monthYear = changeMonth(acw.currentlyViewingMonth, acw.currentlyViewingYear, value);
 
-            $scope['acw'].currentlyViewingMonth = monthYear['month'];
-            $scope['acw'].currentlyViewingYear = monthYear['year'];
-            $scope['acw'].currentlyViewingMonthName = $scope['acw'].month_names[$scope['acw'].currentlyViewingMonth];
-            $scope['acw'].weeks = populateVisibleDays();
+            acw.currentlyViewingMonth = monthYear['month'];
+            acw.currentlyViewingYear = monthYear['year'];
+            acw.currentlyViewingMonthName = acw.month_names[acw.currentlyViewingMonth];
+            acw.weeks = populateVisibleDays();
 
             if (value == 1)
-              $scope['acw'].nextMonthCallback();
+              acw.nextMonthCallback();
             else if (value == -1)
-              $scope['acw'].previousMonthCallback();
+              acw.previousMonthCallback();
           }
 
-          $scope['acw'].isToday = function(date) {
+          acw.isToday = function(date) {
             var today = new Date();
             return date.getDate() == today.getDate() && date.getMonth() == today.getMonth() && date.getYear() == today.getYear();
           }
 
-          $scope['acw'].setSelectedDate = function(date) {
+          acw.setSelectedDate = function(date) {
             var month = date.getMonth();
             var year = date.getFullYear();
 
-            $scope['acw'].selectedDate = date;
-            if (month != $scope['acw'].currentlyViewingMonth) {
-              $scope['acw'].currentlyViewingMonth = month;
-              $scope['acw'].currentlyViewingMonthName = $scope['acw'].month_names[$scope['acw'].currentlyViewingMonth];
-              $scope['acw'].weeks = populateVisibleDays();
+            acw.selectedDate = date;
+            if (month != acw.currentlyViewingMonth) {
+              acw.currentlyViewingMonth = month;
+              acw.currentlyViewingMonthName = acw.month_names[acw.currentlyViewingMonth];
+              acw.weeks = populateVisibleDays();
             }
-            if (year != $scope['acw'].currentlyViewingYear) {
-              $scope['acw'].currentlyViewingYear = year;
-              $scope['acw'].weeks = populateVisibleDays();
-              $scope['acw'].currentlyViewingDecades = calculateDecades();
-              $scope['acw'].yearsViewData = populateVisibleYears();
+            if (year != acw.currentlyViewingYear) {
+              acw.currentlyViewingYear = year;
+              acw.weeks = populateVisibleDays();
+              acw.currentlyViewingDecades = calculateDecades();
+              acw.yearsViewData = populateVisibleYears();
             }
-            $scope['acw'].currentView = $scope['acw'].CALENDAR_VIEWS.DAY;
-            $scope['acw'].selectDateCallback();
+            acw.currentView = acw.CALENDAR_VIEWS.DAY;
+            acw.selectDateCallback();
           }
 
-          $scope['acw'].formatDate = function(date) {
+          acw.formatDate = function(date) {
             return date.getDate() + '/' + (parseInt(date.getMonth())+1) + '/' + date.getFullYear();
           }
 
-          $scope['acw'].selectMonth = function(value) {
-            $scope['acw'].currentlyViewingMonth = value;
-            $scope['acw'].currentlyViewingMonthName = $scope['acw'].month_names[value];
-            $scope['acw'].weeks = populateVisibleDays();
-            $scope['acw'].currentView = $scope['acw'].CALENDAR_VIEWS.DAY;
+          acw.selectMonth = function(value) {
+            acw.currentlyViewingMonth = value;
+            acw.currentlyViewingMonthName = acw.month_names[value];
+            acw.weeks = populateVisibleDays();
+            acw.currentView = acw.CALENDAR_VIEWS.DAY;
           }
 
-          $scope['acw'].selectYear = function(value) {
-            $scope['acw'].currentlyViewingYear = value;
-            $scope['acw'].currentView = $scope['acw'].CALENDAR_VIEWS.MONTH;
+          acw.selectYear = function(value) {
+            acw.currentlyViewingYear = value;
+            acw.currentView = acw.CALENDAR_VIEWS.MONTH;
           }
 
-          $scope['acw'].switchView = function() {
-            for (var key in $scope['acw'].CALENDAR_VIEWS) {
-              if ($scope['acw'].CALENDAR_VIEWS[key] > $scope['acw'].currentView) {
-                $scope['acw'].currentView++;
+          acw.switchView = function() {
+            for (var key in acw.CALENDAR_VIEWS) {
+              if (acw.CALENDAR_VIEWS[key] > acw.currentView) {
+                acw.currentView++;
                 break;
               }
             }
           }
 
-
-          $scope['acw'].viewPrevious = function() {
-            switch ($scope['acw'].currentView) {
-              case $scope['acw'].CALENDAR_VIEWS.DAY: {
-                $scope['acw'].shiftMonth(-1);
+          acw.viewPrevious = function() {
+            switch (acw.currentView) {
+              case acw.CALENDAR_VIEWS.DAY: {
+                acw.shiftMonth(-1);
               } break;
-              case $scope['acw'].CALENDAR_VIEWS.MONTH: {
-                $scope['acw'].currentlyViewingYear--;
-                $scope['acw'].currentlyViewingDecades = calculateDecades();
-                $scope['acw'].yearsViewData = populateVisibleYears();
+              case acw.CALENDAR_VIEWS.MONTH: {
+                acw.currentlyViewingYear--;
+                acw.currentlyViewingDecades = calculateDecades();
+                acw.yearsViewData = populateVisibleYears();
               } break;
-              case $scope['acw'].CALENDAR_VIEWS.YEAR: {
-                $scope['acw'].currentlyViewingYear -= 20;
-                $scope['acw'].currentlyViewingDecades = calculateDecades();
-                $scope['acw'].yearsViewData = populateVisibleYears();
+              case acw.CALENDAR_VIEWS.YEAR: {
+                acw.currentlyViewingYear -= 20;
+                acw.currentlyViewingDecades = calculateDecades();
+                acw.yearsViewData = populateVisibleYears();
               } break;
             }
           }
 
-          $scope['acw'].viewNext = function() {
-            switch ($scope['acw'].currentView) {
-              case $scope['acw'].CALENDAR_VIEWS.DAY: {
-                $scope['acw'].shiftMonth(1);
+          acw.viewNext = function() {
+            switch (acw.currentView) {
+              case acw.CALENDAR_VIEWS.DAY: {
+                acw.shiftMonth(1);
               } break;
-              case $scope['acw'].CALENDAR_VIEWS.MONTH: {
-                $scope['acw'].currentlyViewingYear++;
-                $scope['acw'].yearsViewData = populateVisibleYears();
-                $scope['acw'].currentlyViewingDecades = calculateDecades();
+              case acw.CALENDAR_VIEWS.MONTH: {
+                acw.currentlyViewingYear++;
+                acw.yearsViewData = populateVisibleYears();
+                acw.currentlyViewingDecades = calculateDecades();
               } break;
-              case $scope['acw'].CALENDAR_VIEWS.YEAR: {
-                $scope['acw'].currentlyViewingYear += 20;
-                $scope['acw'].yearsViewData = populateVisibleYears();
-                $scope['acw'].currentlyViewingDecades = calculateDecades();
+              case acw.CALENDAR_VIEWS.YEAR: {
+                acw.currentlyViewingYear += 20;
+                acw.yearsViewData = populateVisibleYears();
+                acw.currentlyViewingDecades = calculateDecades();
               }
             }
           }
+
           // External scope functions (can be used by the library user)
-          $scope['acw'].addEvent = function(title, date) {
+          acw.addEvent = function(title, date) {
             if (typeof(date.getDate) == typeof(date.getMonth) &&
                 typeof(date.getMonth) == typeof(date.getFullYear) &&
                 typeof(date.getFullYear) != 'undefined') {
 
-              if (!$scope['acw'].events[date.getFullYear()]) {
-                $scope['acw'].events[date.getFullYear()] = {};
+              if (!acw.events[date.getFullYear()]) {
+                acw.events[date.getFullYear()] = {};
               }
 
-              if (!$scope['acw'].events[date.getFullYear()][date.getMonth()+1]) {
-                $scope['acw'].events[date.getFullYear()][date.getMonth()+1] = {};
+              if (!acw.events[date.getFullYear()][date.getMonth()+1]) {
+                acw.events[date.getFullYear()][date.getMonth()+1] = {};
               }
 
-              if (!$scope['acw'].events[date.getFullYear()][date.getMonth()+1][date.getDate()]) {
-                $scope['acw'].events[date.getFullYear()][date.getMonth()+1][date.getDate()] = [];
+              if (!acw.events[date.getFullYear()][date.getMonth()+1][date.getDate()]) {
+                acw.events[date.getFullYear()][date.getMonth()+1][date.getDate()] = [];
               }
 
-              $scope['acw'].events[date.getFullYear()][date.getMonth()+1][date.getDate()].push({
+              acw.events[date.getFullYear()][date.getMonth()+1][date.getDate()].push({
                 'title': title,
               });
               return true;
@@ -365,13 +366,13 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
             }
           }
 
-          $scope['acw'].dateHasEvents = function(date) {
+          acw.dateHasEvents = function(date) {
             if(typeof(date.getDate) != 'undefined' && typeof(date.getMonth) != 'undefined' &&
                typeof(date.getFullYear) != 'undefined') {
-              return $scope['acw'].events[date.getFullYear()] != undefined &&
-              $scope['acw'].events[date.getFullYear()][date.getMonth()+1] != undefined &&
-              $scope['acw'].events[date.getFullYear()][date.getMonth()+1][date.getDate()] != undefined &&
-              $scope['acw'].events[date.getFullYear()][date.getMonth()+1][date.getDate()].length > 0;
+              return acw.events[date.getFullYear()] != undefined &&
+              acw.events[date.getFullYear()][date.getMonth()+1] != undefined &&
+              acw.events[date.getFullYear()][date.getMonth()+1][date.getDate()] != undefined &&
+              acw.events[date.getFullYear()][date.getMonth()+1][date.getDate()].length > 0;
             } else {
               console.error('[dateHasEvents] Mismatched types. You should provide '+
               'a Date object.');
@@ -379,17 +380,17 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
             }
           }
 
-          $scope['acw'].getEvents = function(date) {
-            if ($scope['acw'].dateHasEvents(date)) {
+          acw.getEvents = function(date) {
+            if (acw.dateHasEvents(date)) {
               if(typeof(date.getDate) != undefined)
-                return $scope['acw'].events[date.getFullYear()][date.getMonth()+1][date.getDate()];
+                return acw.events[date.getFullYear()][date.getMonth()+1][date.getDate()];
               else
                 return [];
             }
           }
 
           // Setters
-          $scope['acw'].setWeekdaysShort = function(array) {
+          acw.setWeekdaysShort = function(array) {
             var validEntries = 0;
 
             if (array.length == 'undefined') {
@@ -407,7 +408,7 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
               }
 
               if (validEntries == array.length)
-                $scope['acw'].weekdays_short = array;
+                acw.weekdays_short = array;
               else
                 console.error('[setWeekdaysShort] Mismatched types. '+
                 'One of the items in your array isn\'t a string.\n\n'+
@@ -415,7 +416,7 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
             }
           }
 
-          $scope['acw'].setMonthNames = function(array) {
+          acw.setMonthNames = function(array) {
             var validEntries = 0;
 
             if (array.length == 'undefined') {
@@ -433,8 +434,8 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
               }
 
               if (validEntries == array.length) {
-                $scope['acw'].month_names = array;
-                $scope['acw'].currentlyViewingMonthName = array[$scope['acw'].currentlyViewingMonth];
+                acw.month_names = array;
+                acw.currentlyViewingMonthName = array[acw.currentlyViewingMonth];
               }
               else
                 console.error('[setMonthNames] Mismatched types. '+
@@ -444,10 +445,10 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
           }
 
           //Initialize calendar and broadcast when it's ready
-          $scope['acw'].weeks = populateVisibleDays();
-          $scope['acw'].monthsViewData = populateVisibleMonths();
-          $scope['acw'].yearsViewData = populateVisibleYears();
-          $scope['acw'].currentlyViewingDecades = calculateDecades();
+          acw.weeks = populateVisibleDays();
+          acw.monthsViewData = populateVisibleMonths();
+          acw.yearsViewData = populateVisibleYears();
+          acw.currentlyViewingDecades = calculateDecades();
           $rootScope.$broadcast('angular-calendar-widget-loaded');
         }
     };
