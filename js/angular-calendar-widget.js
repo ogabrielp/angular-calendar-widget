@@ -3,57 +3,92 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
         restrict: 'E',
         template: '<div id=\'angular-calendar-widget\'>'+
           '<div id=\'calendar-header\' style=\'display: flex\'>'+
-            '<div id=\'calendar-header-month-year-container\' ng-click="acw.switchView()" ng-if="!acw.header_year_first">'+
-              '<span id="calendar-header-month-year-container-month" ng-show="acw.currentView == acw.CALENDAR_VIEWS.DAY">{{acw.currentlyViewingMonthName}}</span>'+
-              '<span id="calendar-header-month-year-container-separator"  ng-show="acw.currentView == acw.CALENDAR_VIEWS.DAY">{{acw.header_separator}}</span>'+
-              '<span id="calendar-header-month-year-container-year">{{acw.currentlyViewingYear}}</span>'+
-              '<span id="calendar-header-month-year-container-decades" ng-show="acw.currentView == acw.CALENDAR_VIEWS.YEAR">{{acw.currentlyViewingDecades.start}} - {{acw.currentlyViewingDecades.end}}'+
+            '<div id=\'calendar-header-month-year-container\' '+
+              'ng-click="acw.switchView()" ng-if="!acw.header_year_first">'+
+              '<span id="calendar-header-month-year-container-month" '+
+                'ng-show="acw.currentView == acw.CALENDAR_VIEWS.DAY">'+
+                '{{acw.currentlyViewingMonthName}}</span>'+
+              '<span id="calendar-header-month-year-container-separator" '+
+                'ng-show="acw.currentView == acw.CALENDAR_VIEWS.DAY">'+
+                '{{acw.header_separator}}</span>'+
+              '<span id="calendar-header-month-year-container-year">'+
+                '{{acw.currentlyViewingYear}}</span>'+
+              '<span id="calendar-header-month-year-container-decades" '+
+                'ng-show="acw.currentView == acw.CALENDAR_VIEWS.YEAR">'+
+                '{{acw.currentlyViewingDecades.start}} - '+
+                '{{acw.currentlyViewingDecades.end}}</span>'+
             '</div>'+
-            '<div id=\'calendar-header-month-year-container\' ng-click="acw.switchView()" ng-if="acw.header_year_first">'+
-              '<span id="calendar-header-month-year-container-year" ng-show="acw.currentView != acw.CALENDAR_VIEWS.YEAR">{{acw.currentlyViewingYear}}</span>'+
-              '<span id="calendar-header-month-year-container-separator" ng-show="acw.currentView == acw.CALENDAR_VIEWS.DAY">{{acw.header_separator}}</span>'+
-              '<span id="calendar-header-month-year-container-month" ng-show="acw.currentView == acw.CALENDAR_VIEWS.DAY">{{acw.currentlyViewingMonthName}}</span>'+
-              '<span id="calendar-header-month-year-container-decades" ng-show="acw.currentView == acw.CALENDAR_VIEWS.YEAR">{{acw.currentlyViewingDecades.start}} - {{acw.currentlyViewingDecades.end}}'+
+            '<div id=\'calendar-header-month-year-container\' '+
+              'ng-click="acw.switchView()" ng-if="acw.header_year_first">'+
+              '<span id="calendar-header-month-year-container-year" '+
+                'ng-show="acw.currentView != acw.CALENDAR_VIEWS.YEAR">'+
+                '{{acw.currentlyViewingYear}}</span>'+
+              '<span id="calendar-header-month-year-container-separator" '+
+                'ng-show="acw.currentView == acw.CALENDAR_VIEWS.DAY">'+
+                '{{acw.header_separator}}</span>'+
+              '<span id="calendar-header-month-year-container-month" '+
+                'ng-show="acw.currentView == acw.CALENDAR_VIEWS.DAY">'+
+                '{{acw.currentlyViewingMonthName}}</span>'+
+              '<span id="calendar-header-month-year-container-decades" '+
+                'ng-show="acw.currentView == acw.CALENDAR_VIEWS.YEAR">'+
+                '{{acw.currentlyViewingDecades.start}} - '+
+                '{{acw.currentlyViewingDecades.end}}</span>'+
             '</div>'+
-            '<div id=\'calendar-header-previous-month\' ng-click="acw.viewPrevious()">'+
+            '<div id=\'calendar-header-previous-month\' '+
+              'ng-click="acw.viewPrevious()">'+
               '<span>{{acw.header_previous}}</span>'+
             '</div>'+
-            '<div id=\'calendar-header-today\' ng-click="acw.setSelectedDate(acw.today)">'+
+            '<div id=\'calendar-header-today\' '+
+              'ng-click="acw.setSelectedDate(acw.today)">'+
               '<span>{{acw.header_today}}</span>'+
             '</div>'+
-            '<div id=\'calendar-header-next-month\' ng-click="acw.viewNext()">'+
+            '<div id=\'calendar-header-next-month\' '+
+              'ng-click="acw.viewNext()">'+
               '<span>{{acw.header_next}}</span>'+
             '</div>'+
           '</div>'+
           '<div id="calendar-view">'+
-            '<div id=\'calendar-days\' ng-if="acw.currentView == acw.CALENDAR_VIEWS.DAY">'+
+            '<div id=\'calendar-days\' '+
+              'ng-if="acw.currentView == acw.CALENDAR_VIEWS.DAY">'+
               '<table>'+
                 '<tr id=\'calendar-days-weekdays-name\'>'+
-                  '<td ng-repeat="weekday in acw.weekdays_short track by $index">'+
-                    '{{weekday}}'+
+                  '<td ng-repeat="day in acw.weekdays_short track by $index">'+
+                    '{{day}}'+
                   '</td>'+
                 '</tr>'+
-                '<tr class="calendar-days-week" ng-repeat="week in acw.weeks track by $index" ng-attr-id="calendar-days-week-{{$index+1}}">'+
+                '<tr class="calendar-days-week" '+
+                  'ng-repeat="week in acw.weeks track by $index" '+
+                  'ng-attr-id="calendar-days-week-{{$index+1}}">'+
                   '<td ng-repeat="day in week"'+
-                      'ng-attr-id="calendar-day-date-{{day.day}}-{{day.month}}-{{day.year}}"'+
-                      'class="calendar-day calendar-day-date-{{day.day}} calendar-day-month-{{day.month}} calendar-day-year-{{day.year}}"'+
-                      'ng-class="{\'calendar-day-today\': acw.isToday(day.date), \'disabled\': day.month != acw.currentlyViewingMonth+1, \'selected\': acw.formatDate(day.date) == acw.formatDate(acw.selectedDate), \'has-events\': acw.dateHasEvents(day.date)}"'+
+                      'ng-attr-id="date-{{day.day}}-{{day.month}}-{{day.year}}"'+
+                      'class="calendar-day calendar-date-{{day.day}} '+
+                      'calendar-month-{{day.month}} calendar-year-{{day.year}}"'+
+                      'ng-class="{\'calendar-day-today\': acw.isToday(day.date), '+
+                      '\'disabled\': day.month != acw.currentlyViewingMonth+1, '+
+                      '\'selected\': acw.formatDate(day.date) == '+
+                      'acw.formatDate(acw.selectedDate),'+
+                      '\'has-events\': acw.dateHasEvents(day.date)}" '+
                       'ng-click="acw.setSelectedDate(day.date)">'+
                     '<span>{{day.day}}</span>'+
                   '</td>'+
                 '</tr>'+
               '</table>'+
             '</div>'+
-            '<div id="calendar-months" ng-if="acw.currentView == acw.CALENDAR_VIEWS.MONTH">'+
+            '<div id="calendar-months" '+
+              'ng-if="acw.currentView == acw.CALENDAR_VIEWS.MONTH">'+
               '<table>'+
                 '<tr ng-repeat="row in acw.monthsViewData">'+
-                  '<td ng-repeat="month in row" ng-click="acw.selectMonth(4*$parent.$index+$index)" ng-class="{\'selected\': acw.selectedDate.getMonth() == ($parent.$index*4+$index)}">'+
+                  '<td ng-repeat="month in row" '+
+                    'ng-click="acw.selectMonth(4*$parent.$index+$index)" '+
+                    'ng-class="{\'selected\': acw.selectedDate.getMonth() == '+
+                    '($parent.$index*4+$index)}">'+
                     '{{month}}'+
                   '</td>'+
                 '</tr>'+
               '</table>'+
             '</div>'+
-            '<div id="calendar-years" ng-if="acw.currentView == acw.CALENDAR_VIEWS.YEAR">'+
+            '<div id="calendar-years" '+
+              'ng-if="acw.currentView == acw.CALENDAR_VIEWS.YEAR">'+
               '<table>'+
                 '<tr ng-repeat="row in acw.yearsViewData">'+
                   '<td ng-repeat="year in row" ng-click="acw.selectYear(year)">'+
@@ -69,9 +104,17 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
           var acw = $scope['acw'];
 
           // External declarations (can be altered via their respective setters)
-          acw.weekdays_short = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-          acw.month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-          acw.month_names_short = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          acw.weekdays_short = [
+            'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
+          ];
+          acw.month_names = [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+          ];
+          acw.month_names_short = [
+            'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+          ];
 
           acw.header_separator = ' | ';
           acw.header_previous = '<';
@@ -90,11 +133,13 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
           }
           acw.currentView = acw.CALENDAR_VIEWS.DAY;
 
-          // Internal declarations (overriding them may lead to inconsistent behaviour)
+          // Internal declarations (do not override)
           acw.today = new Date();
           acw.selectedDate = acw.today
           acw.currentlyViewingMonth = acw.today.getMonth();
-          acw.currentlyViewingMonthName = acw.month_names[acw.currentlyViewingMonth];
+          acw.currentlyViewingMonthName = acw.month_names[
+            acw.currentlyViewingMonth
+          ];
           acw.currentlyViewingYear = acw.today.getFullYear();
           acw.events = {};
 
@@ -144,11 +189,11 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
           }
 
           function calculateDecades() {
-            var startingDecade = parseInt(acw.currentlyViewingYear/10);
-            startingDecade = startingDecade % 2 == 0 ? startingDecade : startingDecade-1;
+            var decade = parseInt(acw.currentlyViewingYear/10);
+            decade = decade % 2 == 0 ? decade : decade-1;
 
             var obj = {};
-            obj.start = startingDecade*10+1;
+            obj.start = decade*10+1;
             obj.end = obj.start+19;
             return obj;
           }
@@ -156,8 +201,14 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
           function populateVisibleDays() {
             var visibleDays = [];
             var day = 1;
-            var firstWeekday = getFirstWeekday(acw.currentlyViewingMonth, acw.currentlyViewingYear);
-            var monthLength = daysInMonth(acw.currentlyViewingMonth, acw.currentlyViewingYear);
+            var firstWeekday = getFirstWeekday(
+              acw.currentlyViewingMonth,
+              acw.currentlyViewingYear
+            );
+            var monthLength = daysInMonth(
+              acw.currentlyViewingMonth,
+              acw.currentlyViewingYear
+            );
 
             for (var i = firstWeekday; day <= monthLength; i++) {
               visibleDays[i] = {
@@ -170,7 +221,11 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
               day++;
             }
 
-            var previousMonthYear = changeMonth(acw.currentlyViewingMonth, acw.currentlyViewingYear, -1);
+            var previousMonthYear = changeMonth(
+              acw.currentlyViewingMonth,
+              acw.currentlyViewingYear,
+              -1
+            );
             var previousMonth = previousMonthYear['month'];
             var previousYear = previousMonthYear['year'];
             var previousMonthLength = daysInMonth(previousMonth, previousYear);
@@ -186,7 +241,11 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
               previousMonthLength -= 1;
             }
 
-            var nextMonthYear = changeMonth(acw.currentlyViewingMonth, acw.currentlyViewingYear, 1);
+            var nextMonthYear = changeMonth(
+              acw.currentlyViewingMonth,
+              acw.currentlyViewingYear,
+              1
+            );
             var nextMonth = nextMonthYear['month'];
             var nextYear = nextMonthYear['year'];
             day = 1;
@@ -208,10 +267,10 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
           function populateVisibleMonths() {
             var months = [];
             var rows = 3;
-            var columns = 12/rows;
+            var cols = 12/rows;
 
             for (var i = 0; i < rows; i++) {
-              months.push(acw.month_names_short.slice(columns*i, columns*i+columns));
+              months.push(acw.month_names_short.slice(cols*i, cols*i+cols));
             }
             return months;
           }
@@ -238,11 +297,17 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
 
           // Internal scope functions (should only be used by the directive)
           acw.shiftMonth = function(value) {
-            var monthYear = changeMonth(acw.currentlyViewingMonth, acw.currentlyViewingYear, value);
+            var monthYear = changeMonth(
+              acw.currentlyViewingMonth,
+              acw.currentlyViewingYear,
+              value
+            );
 
             acw.currentlyViewingMonth = monthYear['month'];
             acw.currentlyViewingYear = monthYear['year'];
-            acw.currentlyViewingMonthName = acw.month_names[acw.currentlyViewingMonth];
+            acw.currentlyViewingMonthName = acw.month_names[
+              acw.currentlyViewingMonth
+            ];
             acw.weeks = populateVisibleDays();
 
             if (value == 1)
@@ -253,7 +318,9 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
 
           acw.isToday = function(date) {
             var today = new Date();
-            return date.getDate() == today.getDate() && date.getMonth() == today.getMonth() && date.getYear() == today.getYear();
+            return date.getDate() == today.getDate() &&
+              date.getMonth() == today.getMonth() &&
+              date.getYear() == today.getYear();
           }
 
           acw.setSelectedDate = function(date) {
@@ -263,7 +330,9 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
             acw.selectedDate = date;
             if (month != acw.currentlyViewingMonth) {
               acw.currentlyViewingMonth = month;
-              acw.currentlyViewingMonthName = acw.month_names[acw.currentlyViewingMonth];
+              acw.currentlyViewingMonthName = acw.month_names[
+                acw.currentlyViewingMonth
+              ];
               acw.weeks = populateVisibleDays();
             }
             if (year != acw.currentlyViewingYear) {
@@ -277,7 +346,11 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
           }
 
           acw.formatDate = function(date) {
-            return date.getDate() + '/' + (parseInt(date.getMonth())+1) + '/' + date.getFullYear();
+            return date.getDate() +
+              '/' +
+              (parseInt(date.getMonth())+1) +
+              '/' +
+              date.getFullYear();
           }
 
           acw.selectMonth = function(value) {
@@ -343,47 +416,58 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
                 typeof(date.getMonth) == typeof(date.getFullYear) &&
                 typeof(date.getFullYear) != 'undefined') {
 
-              if (!acw.events[date.getFullYear()]) {
-                acw.events[date.getFullYear()] = {};
+              var day = date.getDate();
+              var month = date.getMonth();
+              var year = date.getFullYear();
+
+              if (!acw.events[year]) {
+                acw.events[year] = {};
               }
 
-              if (!acw.events[date.getFullYear()][date.getMonth()+1]) {
-                acw.events[date.getFullYear()][date.getMonth()+1] = {};
+              if (!acw.events[year][month+1]) {
+                acw.events[year][month+1] = {};
               }
 
-              if (!acw.events[date.getFullYear()][date.getMonth()+1][date.getDate()]) {
-                acw.events[date.getFullYear()][date.getMonth()+1][date.getDate()] = [];
+              if (!acw.events[year][month+1][day]) {
+                acw.events[year][month+1][day] = [];
               }
 
-              acw.events[date.getFullYear()][date.getMonth()+1][date.getDate()].push({
+              acw.events[year][month+1][day].push({
                 'title': title,
               });
               return true;
             } else {
-              console.error('[addEvent] Mismatched types. You should provide a '+
-              'Date object.');
+              console.error('[addEvent] Mismatched types. You should provide '+
+              'a Date object.');
               return false;
             }
           }
 
           acw.dateHasEvents = function(date) {
-            if(typeof(date.getDate) != 'undefined' && typeof(date.getMonth) != 'undefined' &&
-               typeof(date.getFullYear) != 'undefined') {
-              return acw.events[date.getFullYear()] != undefined &&
-              acw.events[date.getFullYear()][date.getMonth()+1] != undefined &&
-              acw.events[date.getFullYear()][date.getMonth()+1][date.getDate()] != undefined &&
-              acw.events[date.getFullYear()][date.getMonth()+1][date.getDate()].length > 0;
+            if (date.getDate && date.getMonth && date.getFullYear) {
+              var day = date.getDate();
+              var month = date.getMonth();
+              var year = date.getFullYear();
+
+              return acw.events[year] != undefined &&
+              acw.events[year][month+1] != undefined &&
+              acw.events[year][month+1][day] != undefined &&
+              acw.events[year][month+1][day].length > 0;
             } else {
-              console.error('[dateHasEvents] Mismatched types. You should provide '+
-              'a Date object.');
+              console.error('[dateHasEvents] Mismatched types. You should '+
+              'provide a Date object.');
               return false;
             }
           }
 
           acw.getEvents = function(date) {
             if (acw.dateHasEvents(date)) {
-              if(typeof(date.getDate) != undefined)
-                return acw.events[date.getFullYear()][date.getMonth()+1][date.getDate()];
+              if(date.getDate) {
+                var day = date.getDate();
+                var month = date.getMonth();
+                var year = date.getFullYear();
+                return acw.events[year][month+1][day];
+              }
               else
                 return [];
             }
@@ -398,7 +482,8 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
               'Please make sure it is an ARRAY of strings with length == 7.');
             } else if (array.length != 7) {
               console.error('[setWeekdaysShort] Mismatched lengths. '+
-              'The array should have length == 7.\n\nActual length: '+array.length);
+              'The array should have length == 7.\n\nActual length: '+
+              array.length);
             } else {
               for (var i = 0; i < array.length; i++) {
                 if (typeof(array[i]) != 'string')
@@ -412,7 +497,8 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
               else
                 console.error('[setWeekdaysShort] Mismatched types. '+
                 'One of the items in your array isn\'t a string.\n\n'+
-                'Position: '+i+'\nValue: '+array[i]+' (type: '+typeof(array[i])+')');
+                'Position: '+i+'\nValue: '+array[i]+' (type: '+
+                typeof(array[i])+')');
             }
           }
 
@@ -424,7 +510,8 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
               'Please make sure it is an ARRAY of strings with length == 12.');
             } else if (array.length != 12) {
               console.error('[setMonthNames] Mismatched lengths. '+
-              'The array should have length == 12.\n\nActual length: '+array.length);
+              'The array should have length == 12.\n\nActual length: '+
+              array.length);
             } else {
               for (var i = 0; i < array.length; i++) {
                 if (typeof(array[i]) != 'string')
@@ -440,11 +527,12 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
               else
                 console.error('[setMonthNames] Mismatched types. '+
                 'One of the items in your array isn\'t a string.\n\n'+
-                'Position: '+i+'\nValue: '+array[i]+' (type: '+typeof(array[i])+')');
+                'Position: '+i+'\nValue: '+array[i]+' (type: '+
+                typeof(array[i])+')');
             }
           }
 
-          //Initialize calendar and broadcast when it's ready
+          //Initialize calendar and broadcast when it's ready (do not override)
           acw.weeks = populateVisibleDays();
           acw.monthsViewData = populateVisibleMonths();
           acw.yearsViewData = populateVisibleYears();
