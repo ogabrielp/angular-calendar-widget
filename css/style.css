@@ -132,7 +132,8 @@ div#angular-calendar-widget div#calendar-view div#calendar-years table {
   padding: 0 15px;
 }
 
-div#angular-calendar-widget div#calendar-view td:hover {
+div#angular-calendar-widget div#calendar-view div#calendar-months td:hover,
+div#angular-calendar-widget div#calendar-view div#calendar-years td:hover {
   background: #2D2F3B;
   transition: background 300ms;
   cursor: pointer;
