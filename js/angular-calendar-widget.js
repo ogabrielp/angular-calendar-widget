@@ -11,7 +11,8 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
               '<span id="calendar-header-month-year-container-separator" '+
                 'ng-show="acw.currentView == acw.CALENDAR_VIEWS.DAY">'+
                 '{{acw.header_separator}}</span>'+
-              '<span id="calendar-header-month-year-container-year">'+
+              '<span id="calendar-header-month-year-container-year"'+
+                'ng-show="acw.currentView != acw.CALENDAR_VIEWS.YEAR">'+
                 '{{acw.currentlyViewingYear}}</span>'+
               '<span id="calendar-header-month-year-container-decades" '+
                 'ng-show="acw.currentView == acw.CALENDAR_VIEWS.YEAR">'+
