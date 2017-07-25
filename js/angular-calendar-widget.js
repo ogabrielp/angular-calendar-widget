@@ -4,84 +4,84 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
         template: '<div id=\'angular-calendar-widget\'>'+
           '<div id=\'calendar-header\' style=\'display: flex\'>'+
             '<div id=\'calendar-header-month-year-container\' '+
-              'ng-click="acw.switchView()" ng-if="!acw.header_year_first">'+
+              'ng-click="model.switchView()" ng-if="!model.header_year_first">'+
               '<span id="calendar-header-month-year-container-month" '+
-                'ng-show="acw.currentView == acw.CALENDAR_VIEWS.DAY">'+
-                '{{acw.currentlyViewingMonthName}}</span>'+
+                'ng-show="model.currentView == model.CALENDAR_VIEWS.DAY">'+
+                '{{model.currentlyViewingMonthName}}</span>'+
               '<span id="calendar-header-month-year-container-separator" '+
-                'ng-show="acw.currentView == acw.CALENDAR_VIEWS.DAY">'+
-                '{{acw.header_separator}}</span>'+
+                'ng-show="model.currentView == model.CALENDAR_VIEWS.DAY">'+
+                '{{model.header_separator}}</span>'+
               '<span id="calendar-header-month-year-container-year"'+
-                'ng-show="acw.currentView != acw.CALENDAR_VIEWS.YEAR">'+
-                '{{acw.currentlyViewingYear}}</span>'+
+                'ng-show="model.currentView != model.CALENDAR_VIEWS.YEAR">'+
+                '{{model.currentlyViewingYear}}</span>'+
               '<span id="calendar-header-month-year-container-decades" '+
-                'ng-show="acw.currentView == acw.CALENDAR_VIEWS.YEAR">'+
-                '{{acw.currentlyViewingDecades.start}} - '+
-                '{{acw.currentlyViewingDecades.end}}</span>'+
+                'ng-show="model.currentView == model.CALENDAR_VIEWS.YEAR">'+
+                '{{model.currentlyViewingDecades.start}} - '+
+                '{{model.currentlyViewingDecades.end}}</span>'+
             '</div>'+
             '<div id=\'calendar-header-month-year-container\' '+
-              'ng-click="acw.switchView()" ng-if="acw.header_year_first">'+
+              'ng-click="model.switchView()" ng-if="model.header_year_first">'+
               '<span id="calendar-header-month-year-container-year" '+
-                'ng-show="acw.currentView != acw.CALENDAR_VIEWS.YEAR">'+
-                '{{acw.currentlyViewingYear}}</span>'+
+                'ng-show="model.currentView != model.CALENDAR_VIEWS.YEAR">'+
+                '{{model.currentlyViewingYear}}</span>'+
               '<span id="calendar-header-month-year-container-separator" '+
-                'ng-show="acw.currentView == acw.CALENDAR_VIEWS.DAY">'+
-                '{{acw.header_separator}}</span>'+
+                'ng-show="model.currentView == model.CALENDAR_VIEWS.DAY">'+
+                '{{model.header_separator}}</span>'+
               '<span id="calendar-header-month-year-container-month" '+
-                'ng-show="acw.currentView == acw.CALENDAR_VIEWS.DAY">'+
-                '{{acw.currentlyViewingMonthName}}</span>'+
+                'ng-show="model.currentView == model.CALENDAR_VIEWS.DAY">'+
+                '{{model.currentlyViewingMonthName}}</span>'+
               '<span id="calendar-header-month-year-container-decades" '+
-                'ng-show="acw.currentView == acw.CALENDAR_VIEWS.YEAR">'+
-                '{{acw.currentlyViewingDecades.start}} - '+
-                '{{acw.currentlyViewingDecades.end}}</span>'+
+                'ng-show="model.currentView == model.CALENDAR_VIEWS.YEAR">'+
+                '{{model.currentlyViewingDecades.start}} - '+
+                '{{model.currentlyViewingDecades.end}}</span>'+
             '</div>'+
             '<div id=\'calendar-header-previous-month\' '+
-              'ng-click="acw.viewPrevious()">'+
-              '<span>{{acw.header_previous}}</span>'+
+              'ng-click="model.viewPrevious()">'+
+              '<span>{{model.header_previous}}</span>'+
             '</div>'+
             '<div id=\'calendar-header-today\' '+
-              'ng-click="acw.setSelectedDate(acw.today)">'+
-              '<span>{{acw.header_today}}</span>'+
+              'ng-click="model.setSelectedDate(model.today)">'+
+              '<span>{{model.header_today}}</span>'+
             '</div>'+
             '<div id=\'calendar-header-next-month\' '+
-              'ng-click="acw.viewNext()">'+
-              '<span>{{acw.header_next}}</span>'+
+              'ng-click="model.viewNext()">'+
+              '<span>{{model.header_next}}</span>'+
             '</div>'+
           '</div>'+
           '<div id="calendar-view">'+
             '<div id=\'calendar-days\' '+
-              'ng-if="acw.currentView == acw.CALENDAR_VIEWS.DAY">'+
+              'ng-if="model.currentView == model.CALENDAR_VIEWS.DAY">'+
               '<table>'+
                 '<tr id=\'calendar-days-weekdays-name\'>'+
-                  '<td ng-repeat="day in acw.weekdays_short track by $index">'+
+                  '<td ng-repeat="day in model.weekdays_short track by $index">'+
                     '{{day}}'+
                   '</td>'+
                 '</tr>'+
                 '<tr class="calendar-days-week" '+
-                  'ng-repeat="week in acw.weeks track by $index" '+
+                  'ng-repeat="week in model.weeks track by $index" '+
                   'ng-attr-id="calendar-days-week-{{$index+1}}">'+
                   '<td ng-repeat="day in week"'+
                       'ng-attr-id="date-{{day.day}}-{{day.month}}-{{day.year}}"'+
                       'class="calendar-day calendar-date-{{day.day}} '+
                       'calendar-month-{{day.month}} calendar-year-{{day.year}}"'+
-                      'ng-class="{\'calendar-day-today\': acw.isToday(day.date), '+
-                      '\'disabled\': day.month != acw.currentlyViewingMonth+1, '+
-                      '\'selected\': acw.formatDate(day.date) == '+
-                      'acw.formatDate(acw.selectedDate),'+
-                      '\'has-events\': acw.dateHasEvents(day.date)}" '+
-                      'ng-click="acw.setSelectedDate(day.date)">'+
+                      'ng-class="{\'calendar-day-today\': model.isToday(day.date), '+
+                      '\'disabled\': day.month != model.currentlyViewingMonth+1, '+
+                      '\'selected\': model.formatDate(day.date) == '+
+                      'model.formatDate(model.selectedDate),'+
+                      '\'has-events\': model.dateHasEvents(day.date)}" '+
+                      'ng-click="model.setSelectedDate(day.date)">'+
                     '<span>{{day.day}}</span>'+
                   '</td>'+
                 '</tr>'+
               '</table>'+
             '</div>'+
             '<div id="calendar-months" '+
-              'ng-if="acw.currentView == acw.CALENDAR_VIEWS.MONTH">'+
+              'ng-if="model.currentView == model.CALENDAR_VIEWS.MONTH">'+
               '<table>'+
-                '<tr ng-repeat="row in acw.monthsViewData">'+
+                '<tr ng-repeat="row in model.monthsViewData">'+
                   '<td ng-repeat="month in row" '+
-                    'ng-click="acw.selectMonth(4*$parent.$index+$index)" '+
-                    'ng-class="{\'selected\': acw.selectedDate.getMonth() == '+
+                    'ng-click="model.selectMonth(4*$parent.$index+$index)" '+
+                    'ng-class="{\'selected\': model.selectedDate.getMonth() == '+
                     '($parent.$index*4+$index)}">'+
                     '{{month}}'+
                   '</td>'+
@@ -89,10 +89,10 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
               '</table>'+
             '</div>'+
             '<div id="calendar-years" '+
-              'ng-if="acw.currentView == acw.CALENDAR_VIEWS.YEAR">'+
+              'ng-if="model.currentView == model.CALENDAR_VIEWS.YEAR">'+
               '<table>'+
-                '<tr ng-repeat="row in acw.yearsViewData">'+
-                  '<td ng-repeat="year in row" ng-click="acw.selectYear(year)">'+
+                '<tr ng-repeat="row in model.yearsViewData">'+
+                  '<td ng-repeat="year in row" ng-click="model.selectYear(year)">'+
                     '{{year}}'+
                   '</td>'+
                 '</tr>'+
@@ -100,9 +100,12 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
             '</div>'+
           '</div>'+
         '</div>',
-        controller: function($rootScope, $scope) {
-          $scope['acw'] = {};
-          var acw = $scope['acw'];
+        scope: {
+          model: "=",
+          name: "@"
+        },
+        controller: function($rootScope, $scope, $attrs) {
+          var acw = $scope.model;
 
           // External declarations (can be altered via their respective setters)
           acw.weekdays_short = [
@@ -538,7 +541,8 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
           acw.monthsViewData = populateVisibleMonths();
           acw.yearsViewData = populateVisibleYears();
           acw.currentlyViewingDecades = calculateDecades();
-          $rootScope.$broadcast('angular-calendar-widget-loaded');
+          console.log('angular-calendar-widget-'+$attrs.name+'-loaded');
+          $rootScope.$broadcast('angular-calendar-widget-'+$attrs.name+'-loaded');
         }
     };
 });
