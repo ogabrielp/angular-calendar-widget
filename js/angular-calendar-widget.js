@@ -71,6 +71,11 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
                       '\'has-events\': model.dateHasEvents(day.date)}" '+
                       'ng-click="model.setSelectedDate(day.date)">'+
                     '<span>{{day.day}}</span>'+
+                    '<div class="calendar-day events" '+
+                    'ng-if="model.dateHasEvents(day.date)">'+
+                      '<span ng-repeat="color in model.getEventColors(day.date)" '+
+                      'style="color: {{color}}">•</span>'+
+                    '</div>'+
                   '</td>'+
                 '</tr>'+
               '</table>'+
@@ -118,6 +123,14 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
           acw.month_names_short = [
             'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
             'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+          ];
+
+          acw.COLOR_LIMIT = 4;
+          acw.default_event_colors = [
+            '#134074',
+            '#F77F00',
+            '#D62828',
+            '#2DE1FC'
           ];
 
           acw.header_separator = ' | ';
@@ -414,8 +427,34 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
             }
           }
 
+          acw.getEventColors = function(date) {
+            var events = acw.getEvents(date);
+            var colors = [];
+
+            for (var i in events) {
+              if (colors.length == acw.COLOR_LIMIT)
+                break;
+              else {
+                if (events[i].color) {
+                  if (colors.indexOf(events[i].color) < 0 && events[i].color != '') {
+                    colors.push(events[i].color);
+                  }
+                } else {
+                    for (color in acw.default_event_colors) {
+                      if (colors.indexOf(acw.default_event_colors[color]) < 0) {
+                        colors.push(acw.default_event_colors[color]);
+                        break;
+                      }
+                    }
+                }
+              }
+            }
+
+            return colors;
+          }
+
           // External scope functions (can be used by the library user)
-          acw.addEvent = function(title, date) {
+          acw.addEvent = function(title, date, color) {
             if (typeof(date.getDate) == typeof(date.getMonth) &&
                 typeof(date.getMonth) == typeof(date.getFullYear) &&
                 typeof(date.getFullYear) != 'undefined') {
@@ -436,8 +475,11 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
                 acw.events[year][month+1][day] = [];
               }
 
+              color = color ? color : ''
+
               acw.events[year][month+1][day].push({
                 'title': title,
+                'color': color
               });
               return true;
             } else {
@@ -466,7 +508,7 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
 
           acw.getEvents = function(date) {
             if (acw.dateHasEvents(date)) {
-              if(date.getDate) {
+              if (date.getDate) {
                 var day = date.getDate();
                 var month = date.getMonth();
                 var year = date.getFullYear();
@@ -541,7 +583,6 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
           acw.monthsViewData = populateVisibleMonths();
           acw.yearsViewData = populateVisibleYears();
           acw.currentlyViewingDecades = calculateDecades();
-          console.log('angular-calendar-widget-'+$attrs.name+'-loaded');
           $rootScope.$broadcast('angular-calendar-widget-'+$attrs.name+'-loaded');
         }
     };
