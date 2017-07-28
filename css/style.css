@@ -36,6 +36,7 @@ div#angular-calendar-widget div#calendar-header-today {
   text-align: center;
   color: white;
   transition: background 300ms;
+  position: relative;
 }
 
 div#angular-calendar-widget div#calendar-days table tr td.calendar-day.disabled {
@@ -98,6 +99,7 @@ div#angular-calendar-widget tr.calendar-days-week td.calendar-day {
   color: white;
   cursor: pointer;
   transition: background 300ms;
+  position: relative;
 }
 
 div#angular-calendar-widget tr.calendar-days-week td.calendar-day:hover {
@@ -114,9 +116,9 @@ div#angular-calendar-widget tr.calendar-days-week td.calendar-day a {
   line-height: 100%;
 }
 
-div#angular-calendar-widget tr.calendar-days-week td.calendar-day.has-events span {
+/*div#angular-calendar-widget tr.calendar-days-week td.calendar-day.has-events > span {
   border-bottom: 2px solid #14DFCB;
-}
+}*/
 
 div#angular-calendar-widget div#calendar-view div#calendar-months table,
 div#angular-calendar-widget div#calendar-view div#calendar-years table {
@@ -137,4 +139,17 @@ div#angular-calendar-widget div#calendar-view div#calendar-years td:hover {
   background: #2D2F3B;
   transition: background 300ms;
   cursor: pointer;
+}
+
+div#angular-calendar-widget div#calendar-view table div.calendar-day.events {
+  position: absolute;
+  width: 100%;
+  overflow: hidden;
+  left: 0;
+  max-height: 20px;
+  margin-top: -7px;
+}
+
+div#angular-calendar-widget div#calendar-view table div.calendar-day.events span {
+    margin: 1px;
 }
