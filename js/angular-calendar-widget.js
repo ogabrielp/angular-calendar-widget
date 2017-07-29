@@ -168,6 +168,15 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
           acw.events = {};
 
           // Internal functions (not accessible to the library user)
+          function isValidDate(date) {
+            return typeof(date.getDate) == 'function' &&
+            typeof(date.getMonth) == 'function' &&
+            typeof(date.getFullYear) == 'function' &&
+            typeof(date.getDate()) == 'number' &&
+            typeof(date.getMonth()) == 'number' &&
+            typeof(date.getFullYear()) == 'number'
+          }
+
           function daysInMonth(month, year) {
             return new Date(year, month+1, 0).getDate();
           }
@@ -470,9 +479,7 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
 
           // External scope functions (can be used by the library user)
           acw.addEvent = function(title, date, color) {
-            if (typeof(date.getDate) == typeof(date.getMonth) &&
-                typeof(date.getMonth) == typeof(date.getFullYear) &&
-                typeof(date.getFullYear) != 'undefined') {
+            if (isValidDate(date)) {
 
               var day = date.getDate();
               var month = date.getMonth();
@@ -505,7 +512,7 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
           }
 
           acw.dateHasEvents = function(date) {
-            if (date.getDate && date.getMonth && date.getFullYear) {
+            if (isValidDate(date)) {
               var day = date.getDate();
               var month = date.getMonth();
               var year = date.getFullYear();
