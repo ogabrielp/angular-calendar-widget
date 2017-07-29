@@ -470,11 +470,31 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
           }
 
           acw.addToDisabledDays = function(type, date1, date2=null) {
-            acw.disabledDates.push({
-              'type': type,
-              'date1': date1,
-              'date2': date2
-            })
+            if (isValidDate(date1) && (!date2 || isValidDate(date2))) {
+              if (!date2 || (date2 && date2 > date1))
+              acw.disabledDates.push({
+                'type': type,
+                'date1': date1,
+                'date2': date2
+              })
+            }
+          }
+
+          acw.dateIsDisabled = function(date) {
+            for (var i in acw.disabledDates) {
+              switch (acw.disabledDates[i].type) {
+                case acw.DISABLE_TYPE.BEFORE: {
+                  return date < acw.disabledDates[i].date1;
+                }
+                case acw.DISABLE_TYPE.BETWEEN: {
+                  return acw.disabledDates[i].date1 < date &&
+                    date < acw.disabledDates[i].date2;
+                }
+                case acw.DISABLE_TYPE.AFTER: {
+                  return date > acw.disabledDates[i].date1;
+                }
+              }
+            }
           }
 
           // External scope functions (can be used by the library user)
