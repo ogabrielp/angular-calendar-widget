@@ -150,6 +150,13 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
           }
           acw.currentView = acw.CALENDAR_VIEWS.DAY;
 
+          acw.disabledDates = [];
+          acw.DISABLE_TYPE = {
+            BEFORE: 0,
+            BETWEEN: 1,
+            AFTER: 2
+          }
+
           // Internal declarations (do not override)
           acw.today = new Date();
           acw.selectedDate = acw.today
@@ -451,6 +458,14 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
             }
 
             return colors;
+          }
+
+          acw.addToDisabledDays = function(type, date1, date2=null) {
+            acw.disabledDates.push({
+              'type': type,
+              'date1': date1,
+              'date2': date2
+            })
           }
 
           // External scope functions (can be used by the library user)
