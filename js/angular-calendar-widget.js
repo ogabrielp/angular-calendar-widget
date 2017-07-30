@@ -174,7 +174,10 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
             typeof(date.getFullYear) == 'function' &&
             typeof(date.getDate()) == 'number' &&
             typeof(date.getMonth()) == 'number' &&
-            typeof(date.getFullYear()) == 'number'
+            typeof(date.getFullYear()) == 'number' &&
+            !isNaN(date.getDate()) &&
+            !isNaN(date.getMonth()) &&
+            !isNaN(date.getFullYear())
           }
 
           function daysInMonth(month, year) {
