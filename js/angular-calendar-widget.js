@@ -65,7 +65,7 @@ angular.module('angularCalendarWidget', []).directive('calendarWidget', function
                       'class="calendar-day calendar-date-{{day.day}} '+
                       'calendar-month-{{day.month}} calendar-year-{{day.year}}"'+
                       'ng-class="{\'calendar-day-today\': model.isToday(day.date), '+
-                      '\'disabled\': day.month != model.currentlyViewingMonth+1, '+
+                      '\'different-month\': day.month != model.currentlyViewingMonth+1, '+
                       '\'selected\': model.formatDate(day.date) == '+
                       'model.formatDate(model.selectedDate),'+
                       '\'has-events\': model.dateHasEvents(day.date)}" '+

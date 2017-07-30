@@ -39,11 +39,11 @@ div#angular-calendar-widget div#calendar-header-today {
   position: relative;
 }
 
-div#angular-calendar-widget div#calendar-days table tr td.calendar-day.disabled {
+div#angular-calendar-widget div#calendar-days table tr td.calendar-day.different-month {
   color: #5D5D6F;
 }
 
-div#angular-calendar-widget div#calendar-days table tr td.calendar-day.disabled.selected {
+div#angular-calendar-widget div#calendar-days table tr td.calendar-day.different-month.selected {
   background: #999;
 }
 
